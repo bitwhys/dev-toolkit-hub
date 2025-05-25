@@ -4,7 +4,9 @@ import { Inter } from 'next/font/google'
 
 import '@/styles/globals.css'
 
+import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
+import { ContentPlaceholder } from '@/components/content-placeholder'
 import { ThemeProvider } from '@/components/theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -73,10 +75,28 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
-          {children}
+    <html lang="en" suppressHydrationWarning className="bg-background h-full">
+      <body className={cn(inter.className, 'h-full')}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div>
+            {/*  Static sidebar for desktop  */}
+            <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+              {/*  Sidebar component, swap this element with another sidebar if you like  */}
+              <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+                <ContentPlaceholder />
+              </div>
+            </div>
+
+            <main className="py-10 lg:pl-72">
+              <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+            </main>
+          </div>
+
           <Toaster />
         </ThemeProvider>
       </body>
