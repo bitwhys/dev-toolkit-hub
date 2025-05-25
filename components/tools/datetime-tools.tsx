@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { NumberInput } from '@/components/number-input'
 
 export function DateTimeTools() {
   const { toast } = useToast()
@@ -225,11 +226,11 @@ export function DateTimeTools() {
               <div className="space-y-2">
                 <Label htmlFor="unix-timestamp">Unix Timestamp</Label>
                 <div className="flex">
-                  <Input
+                  <NumberInput
                     id="unix-timestamp"
                     placeholder="e.g., 1609459200"
-                    value={unixTimestamp}
-                    onChange={(e) => setUnixTimestamp(e.target.value)}
+                    value={+unixTimestamp}
+                    onChange={(value) => setUnixTimestamp(`${value}`)}
                     className="font-mono"
                   />
                   <Button

@@ -83,7 +83,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className="creightit"
       data-accent-color="lime"
-      data-gray-color="slate"
+      data-gray-color="sand"
     >
       <body
         className={cn(geistSans.variable, geistMono.variable, 'bg-gray-2 font-sans antialiased')}
