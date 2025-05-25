@@ -356,7 +356,7 @@ Easy to extend with additional variants:
 
 .card-content {
   padding: 1rem 1.5rem 1.5rem;
-  flex-grow: 1;
+  grow: 1;
 }
 
 .card-content p {
