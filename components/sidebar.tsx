@@ -10,6 +10,7 @@ import {
   Code2,
   FileJson,
   FingerprintIcon as FingerPrint,
+  GitCompare,
   Home,
   Key,
   Menu,
@@ -28,7 +29,6 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname()
-
   const tools = [
     { id: 'home', name: 'Home', icon: <Home className="h-5 w-5" />, href: '/' },
     {
@@ -60,6 +60,12 @@ export function Sidebar({ className }: SidebarProps) {
       name: 'Text Manipulation',
       icon: <Type className="h-5 w-5" />,
       href: '/tools/text-manipulation',
+    },
+    {
+      id: 'text-diff',
+      name: 'Text Diff Checker',
+      icon: <GitCompare className="h-5 w-5" />,
+      href: '/tools/text-diff',
     },
     {
       id: 'encoders-decoders',
@@ -104,7 +110,6 @@ export function Sidebar({ className }: SidebarProps) {
       href: '/tools/snippets',
     },
   ]
-
   const SidebarContent = (
     <div className={cn('pb-12', className)}>
       <div className="space-y-4 py-4">

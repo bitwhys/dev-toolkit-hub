@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@import './colors/palette.css';
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -122,15 +124,6 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* originui css below */
-
-@theme inline {
-  --font-heading: var(--font-heading);
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
 }
 
 @layer base {
