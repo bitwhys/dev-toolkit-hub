@@ -330,11 +330,11 @@ export default function SnippetsPage() {
       </section>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-        <div className="lg:col-span-1">
-          <SnippetFilters onFiltersChange={handleFiltersChange} />
-        </div>
+        {/*<div className="lg:col-span-1">*/}
+        {/*  <SnippetFilters onFiltersChange={handleFiltersChange} />*/}
+        {/*</div>*/}
 
-        <div className="lg:col-span-3">
+        <div className="col-span-full">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <p className="text-muted-foreground text-sm">
@@ -342,7 +342,7 @@ export default function SnippetsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {filteredSnippets.map((snippet) => (
                 <SnippetCard key={snippet.id} snippet={snippet} />
               ))}

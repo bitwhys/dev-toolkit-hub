@@ -179,7 +179,7 @@ export function DataConverters() {
           <TabsContent value="base64" className="space-y-4">
             <div className="flex items-center justify-between">
               <Select value={base64Mode} onValueChange={setBase64Mode}>
-                <SelectTrigger className="w-40">
+                <SelectTrigger className="max-w-48 min-w-40">
                   <SelectValue placeholder="Mode" />
                 </SelectTrigger>
                 <SelectContent>

@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/sidebar'
 import { NavMain } from '@/components/nav-main'
 import { SearchForm } from '@/components/search-form'
+import { SidebarNavItem } from '@/components/sidebar-nav-item'
 import { SidebarOptInForm } from '@/components/sidebar-opt-in-form'
 
 // This is sample data.
@@ -31,8 +32,8 @@ const data = {
           url: '/tools/transformations/html-jsx',
         },
         {
-          title: 'Code Transformations',
-          url: '/tools/transformations',
+          title: 'Snippets',
+          url: '/tools/snippets',
         },
       ],
     },
@@ -117,11 +118,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive || false}>
-                      <a href={item.url}>{item.title}</a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <SidebarNavItem key={item.title} title={item.title} url={item.url} />
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>

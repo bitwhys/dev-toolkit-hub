@@ -1,6 +1,6 @@
 import type React from 'react'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 
 import '@/styles/globals.css'
 
@@ -11,7 +11,8 @@ import { AppSidebar } from '@/components/app-sidebar'
 import { SiteHeader } from '@/components/site-header'
 import { ThemeProvider } from '@/components/theme-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const geistSans = Geist({ variable: '--geist-sans', subsets: ['latin'] })
+const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--geist-mono' })
 
 export const metadata: Metadata = {
   title: 'DevToolkit Hub — Tools That Developers Love',
@@ -77,8 +78,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="bg-background h-full">
-      <body className={cn(inter.className, 'h-full')}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="creightit"
+      data-accent-color="lime"
+      data-gray-color="slate"
+    >
+      <body
+        className={cn(geistSans.variable, geistMono.variable, 'bg-gray-2 font-sans antialiased')}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -87,7 +96,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <SidebarInset>
+            <SidebarInset className="bg-gray-2">
               <SiteHeader />
               <div className="flex flex-1 flex-col gap-4 p-4">
                 <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
