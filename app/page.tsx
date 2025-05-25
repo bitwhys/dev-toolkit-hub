@@ -16,7 +16,6 @@ import {
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ModeToggle } from '@/components/mode-toggle'
 
 const tools = [
   {
@@ -107,87 +106,81 @@ const tools = [
 
 export default function Home() {
   return (
-    <>
-      <div className="mb-6 flex justify-end">
-        <ModeToggle />
-      </div>
-
-      <div className="space-y-8">
-        {/* Hero Section */}
-        <section className="space-y-4">
-          <h1 className="text-4xl font-bold">DevToolkit Hub</h1>
-          <p className="text-muted-foreground max-w-3xl text-xl">
-            Your all-in-one Swiss Army knife for developer tasks — from decoding JWTs to
-            cryptographic key generation, base conversions, and more.
+    <div className="space-y-8">
+      {/* Hero Section */}
+      <section className="space-y-4">
+        <h1 className="text-4xl font-bold">DevToolkit Hub</h1>
+        <p className="text-muted-foreground max-w-3xl text-xl">
+          Your all-in-one Swiss Army knife for developer tasks — from decoding JWTs to cryptographic
+          key generation, base conversions, and more.
+        </p>
+        <div className="mt-4 max-w-3xl rounded-md bg-yellow-100 p-4 dark:bg-yellow-900/30">
+          <p className="text-sm text-yellow-800 dark:text-yellow-200">
+            <strong>Privacy Notice:</strong> All operations are done locally in your browser. No
+            data is stored or transmitted.
           </p>
-          <div className="mt-4 max-w-3xl rounded-md bg-yellow-100 p-4 dark:bg-yellow-900/30">
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
-              <strong>Privacy Notice:</strong> All operations are done locally in your browser. No
-              data is stored or transmitted.
+        </div>
+      </section>
+
+      {/* Tools Grid */}
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold">Available Tools</h2>
+          <Button asChild variant="outline">
+            <Link href="/tools">
+              View All Tools
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {tools.map((tool) => (
+            <Card key={tool.id} className="transition-shadow hover:shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center text-lg">
+                  {tool.icon}
+                  <span className="ml-2">{tool.name}</span>
+                </CardTitle>
+                <CardDescription>{tool.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link href={tool.href}>
+                    Open Tool
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="space-y-6">
+        <h2 className="text-2xl font-semibold">Why DevToolkit Hub?</h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">🔒 Privacy First</h3>
+            <p className="text-muted-foreground">
+              All processing happens locally in your browser. Your data never leaves your device.
             </p>
           </div>
-        </section>
-
-        {/* Tools Grid */}
-        <section className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Available Tools</h2>
-            <Button asChild variant="outline">
-              <Link href="/tools">
-                View All Tools
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">⚡ Fast & Efficient</h3>
+            <p className="text-muted-foreground">
+              No server round-trips means instant results for all your developer tasks.
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {tools.map((tool) => (
-              <Card key={tool.id} className="transition-shadow hover:shadow-md">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-lg">
-                    {tool.icon}
-                    <span className="ml-2">{tool.name}</span>
-                  </CardTitle>
-                  <CardDescription>{tool.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button asChild className="w-full">
-                    <Link href={tool.href}>
-                      Open Tool
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">🛠️ Comprehensive</h3>
+            <p className="text-muted-foreground">
+              Everything you need in one place - from JWT decoding to network calculations.
+            </p>
           </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold">Why DevToolkit Hub?</h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium">🔒 Privacy First</h3>
-              <p className="text-muted-foreground">
-                All processing happens locally in your browser. Your data never leaves your device.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium">⚡ Fast & Efficient</h3>
-              <p className="text-muted-foreground">
-                No server round-trips means instant results for all your developer tasks.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium">🛠️ Comprehensive</h3>
-              <p className="text-muted-foreground">
-                Everything you need in one place - from JWT decoding to network calculations.
-              </p>
-            </div>
-          </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+    </div>
   )
 }

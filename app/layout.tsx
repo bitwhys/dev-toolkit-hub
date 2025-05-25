@@ -5,8 +5,10 @@ import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 
 import { cn } from '@/lib/utils'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/toaster'
-import { ContentPlaceholder } from '@/components/content-placeholder'
+import { AppSidebar } from '@/components/app-sidebar'
+import { SiteHeader } from '@/components/site-header'
 import { ThemeProvider } from '@/components/theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -83,20 +85,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div>
-            {/*  Static sidebar for desktop  */}
-            <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-              {/*  Sidebar component, swap this element with another sidebar if you like  */}
-              <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
-                <ContentPlaceholder />
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <SiteHeader />
+              <div className="flex flex-1 flex-col gap-4 p-4">
+                <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+                  {children}
+                </div>
               </div>
-            </div>
-
-            <main className="py-10 lg:pl-72">
-              <div className="px-4 sm:px-6 lg:px-8">{children}</div>
-            </main>
-          </div>
-
+            </SidebarInset>
+          </SidebarProvider>
           <Toaster />
         </ThemeProvider>
       </body>
