@@ -1,10 +1,11 @@
-import { EncodersDecoders } from "@/components/tools/encoders-decoders"
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
+
+import { EncodersDecoders } from '@/components/tools/encoders-decoders'
 
 export const metadata: Metadata = {
-  title: "Encoders & Decoders - DevToolkit Hub",
+  title: 'Encoders & Decoders - DevToolkit Hub',
   description:
-    "Encode and decode Base64, HTML entities, and create JWT tokens. Essential encoding tools for developers.",
+    'Encode and decode Base64, HTML entities, and create JWT tokens. Essential encoding tools for developers.',
 }
 
 export default function EncodersDecodersPage() {

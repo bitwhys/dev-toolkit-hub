@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Eye, Heart, Calendar } from "lucide-react"
-import Link from "next/link"
-import { formatDistanceToNow } from "date-fns"
+import Link from 'next/link'
+import { formatDistanceToNow } from 'date-fns'
+import { Calendar, Eye, Heart } from 'lucide-react'
+
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface SnippetCardProps {
   snippet: {
@@ -23,10 +24,11 @@ interface SnippetCardProps {
 }
 
 export function SnippetCard({ snippet }: SnippetCardProps) {
-  const previewCode = snippet.code.length > 150 ? snippet.code.substring(0, 150) + "..." : snippet.code
+  const previewCode =
+    snippet.code.length > 150 ? snippet.code.substring(0, 150) + '...' : snippet.code
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="transition-shadow hover:shadow-md">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="space-y-1">
@@ -39,7 +41,7 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
           </div>
           <Badge variant="secondary">{snippet.language}</Badge>
         </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex items-center gap-2 text-sm">
           <span>by {snippet.author}</span>
           <span>•</span>
           <div className="flex items-center gap-1">
@@ -50,7 +52,7 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <pre className="bg-muted p-3 rounded-md text-sm overflow-hidden">
+          <pre className="bg-muted overflow-hidden rounded-md p-3 text-sm">
             <code>{previewCode}</code>
           </pre>
 
@@ -69,7 +71,7 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
               )}
             </div>
 
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="text-muted-foreground flex items-center gap-4 text-sm">
               <div className="flex items-center gap-1">
                 <Eye className="h-4 w-4" />
                 {snippet.views}

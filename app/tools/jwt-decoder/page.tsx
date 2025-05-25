@@ -1,9 +1,11 @@
-import { JwtDecoder } from "@/components/tools/jwt-decoder"
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
+
+import { JwtDecoder } from '@/components/tools/jwt-decoder'
 
 export const metadata: Metadata = {
-  title: "JWT Decoder - DevToolkit Hub",
-  description: "Decode and verify JSON Web Tokens (JWT) online. Fast, secure, and privacy-focused JWT decoder tool.",
+  title: 'JWT Decoder - DevToolkit Hub',
+  description:
+    'Decode and verify JSON Web Tokens (JWT) online. Fast, secure, and privacy-focused JWT decoder tool.',
 }
 
 export default function JwtDecoderPage() {

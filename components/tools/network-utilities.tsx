@@ -1,20 +1,21 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Wifi, Copy, Check } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from 'react'
+import { Check, Copy, Wifi } from 'lucide-react'
+
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export function NetworkUtilities() {
   const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // IP Validator
-  const [ipInput, setIpInput] = useState("")
+  const [ipInput, setIpInput] = useState('')
   const [ipValidation, setIpValidation] = useState<{
     isValid: boolean
     type: string
@@ -22,7 +23,7 @@ export function NetworkUtilities() {
   } | null>(null)
 
   // CIDR Calculator
-  const [cidrInput, setCidrInput] = useState("")
+  const [cidrInput, setCidrInput] = useState('')
   const [cidrResult, setCidrResult] = useState<{
     networkAddress: string
     broadcastAddress: string
@@ -34,8 +35,8 @@ export function NetworkUtilities() {
   } | null>(null)
 
   // Subnet Calculator
-  const [ipAddress, setIpAddress] = useState("")
-  const [subnetMask, setSubnetMask] = useState("")
+  const [ipAddress, setIpAddress] = useState('')
+  const [subnetMask, setSubnetMask] = useState('')
   const [subnetResult, setSubnetResult] = useState<{
     networkAddress: string
     broadcastAddress: string
@@ -54,7 +55,7 @@ export function NetworkUtilities() {
 
     if (ipv4Regex.test(ipInput)) {
       // Check for special IPv4 addresses
-      const octets = ipInput.split(".").map(Number)
+      const octets = ipInput.split('.').map(Number)
 
       if (
         octets[0] === 10 ||
@@ -63,40 +64,40 @@ export function NetworkUtilities() {
       ) {
         setIpValidation({
           isValid: true,
-          type: "IPv4 (Private)",
-          message: "This is a valid private IPv4 address.",
+          type: 'IPv4 (Private)',
+          message: 'This is a valid private IPv4 address.',
         })
       } else if (octets[0] === 127) {
         setIpValidation({
           isValid: true,
-          type: "IPv4 (Loopback)",
-          message: "This is a loopback IPv4 address.",
+          type: 'IPv4 (Loopback)',
+          message: 'This is a loopback IPv4 address.',
         })
       } else if (octets[0] === 169 && octets[1] === 254) {
         setIpValidation({
           isValid: true,
-          type: "IPv4 (Link-local)",
-          message: "This is a link-local IPv4 address.",
+          type: 'IPv4 (Link-local)',
+          message: 'This is a link-local IPv4 address.',
         })
       } else {
         setIpValidation({
           isValid: true,
-          type: "IPv4 (Public)",
-          message: "This is a valid public IPv4 address.",
+          type: 'IPv4 (Public)',
+          message: 'This is a valid public IPv4 address.',
         })
       }
     } else if (ipv6Regex.test(ipInput)) {
       // Simplified IPv6 validation
       setIpValidation({
         isValid: true,
-        type: "IPv6",
-        message: "This is a valid IPv6 address.",
+        type: 'IPv6',
+        message: 'This is a valid IPv6 address.',
       })
     } else {
       setIpValidation({
         isValid: false,
-        type: "Invalid",
-        message: "This is not a valid IP address.",
+        type: 'Invalid',
+        message: 'This is not a valid IP address.',
       })
     }
   }
@@ -104,21 +105,21 @@ export function NetworkUtilities() {
   const calculateCidr = () => {
     try {
       // Parse CIDR notation (e.g., "192.168.1.0/24")
-      const [ip, prefixStr] = cidrInput.split("/")
+      const [ip, prefixStr] = cidrInput.split('/')
       const prefix = Number.parseInt(prefixStr)
 
       if (isNaN(prefix) || prefix < 0 || prefix > 32) {
-        throw new Error("Invalid CIDR prefix. Must be between 0 and 32.")
+        throw new Error('Invalid CIDR prefix. Must be between 0 and 32.')
       }
 
       // Convert IP to binary
-      const octets = ip.split(".").map(Number)
+      const octets = ip.split('.').map(Number)
       if (octets.length !== 4 || octets.some((o) => isNaN(o) || o < 0 || o > 255)) {
-        throw new Error("Invalid IP address format.")
+        throw new Error('Invalid IP address format.')
       }
 
       // Calculate subnet mask
-      const subnetMaskBinary = "1".repeat(prefix) + "0".repeat(32 - prefix)
+      const subnetMaskBinary = '1'.repeat(prefix) + '0'.repeat(32 - prefix)
       const subnetMaskOctets = []
       for (let i = 0; i < 32; i += 8) {
         subnetMaskOctets.push(Number.parseInt(subnetMaskBinary.substring(i, i + 8), 2))
@@ -145,19 +146,19 @@ export function NetworkUtilities() {
       const usableHosts = totalHosts > 2 ? totalHosts - 2 : totalHosts
 
       setCidrResult({
-        networkAddress: networkOctets.join("."),
-        broadcastAddress: broadcastOctets.join("."),
-        firstUsable: firstUsableOctets.join("."),
-        lastUsable: lastUsableOctets.join("."),
+        networkAddress: networkOctets.join('.'),
+        broadcastAddress: broadcastOctets.join('.'),
+        firstUsable: firstUsableOctets.join('.'),
+        lastUsable: lastUsableOctets.join('.'),
         totalHosts,
         usableHosts,
-        subnetMask: subnetMaskOctets.join("."),
+        subnetMask: subnetMaskOctets.join('.'),
       })
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -165,15 +166,15 @@ export function NetworkUtilities() {
   const calculateSubnet = () => {
     try {
       // Parse IP and subnet mask
-      const ipOctets = ipAddress.split(".").map(Number)
-      const maskOctets = subnetMask.split(".").map(Number)
+      const ipOctets = ipAddress.split('.').map(Number)
+      const maskOctets = subnetMask.split('.').map(Number)
 
       if (ipOctets.length !== 4 || ipOctets.some((o) => isNaN(o) || o < 0 || o > 255)) {
-        throw new Error("Invalid IP address format.")
+        throw new Error('Invalid IP address format.')
       }
 
       if (maskOctets.length !== 4 || maskOctets.some((o) => isNaN(o) || o < 0 || o > 255)) {
-        throw new Error("Invalid subnet mask format.")
+        throw new Error('Invalid subnet mask format.')
       }
 
       // Calculate network address
@@ -202,16 +203,16 @@ export function NetworkUtilities() {
       }
 
       setSubnetResult({
-        networkAddress: networkOctets.join("."),
-        broadcastAddress: broadcastOctets.join("."),
-        usableRange: `${firstUsableOctets.join(".")} - ${lastUsableOctets.join(".")}`,
+        networkAddress: networkOctets.join('.'),
+        broadcastAddress: broadcastOctets.join('.'),
+        usableRange: `${firstUsableOctets.join('.')} - ${lastUsableOctets.join('.')}`,
         totalHosts: isSingleHost ? totalHosts : totalHosts - 2,
       })
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -220,8 +221,8 @@ export function NetworkUtilities() {
     navigator.clipboard.writeText(text)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "The content has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
@@ -261,15 +262,15 @@ export function NetworkUtilities() {
 
             {ipValidation && (
               <div
-                className={`p-4 rounded-md ${ipValidation.isValid ? "bg-green-100 dark:bg-green-900/30" : "bg-red-100 dark:bg-red-900/30"}`}
+                className={`rounded-md p-4 ${ipValidation.isValid ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'}`}
               >
                 <h3
-                  className={`font-medium ${ipValidation.isValid ? "text-green-800 dark:text-green-200" : "text-red-800 dark:text-red-200"}`}
+                  className={`font-medium ${ipValidation.isValid ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'}`}
                 >
                   {ipValidation.type}
                 </h3>
                 <p
-                  className={`mt-1 text-sm ${ipValidation.isValid ? "text-green-700 dark:text-green-300" : "text-red-700 dark:text-red-300"}`}
+                  className={`mt-1 text-sm ${ipValidation.isValid ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}
                 >
                   {ipValidation.message}
                 </p>
@@ -294,34 +295,34 @@ export function NetworkUtilities() {
             </Button>
 
             {cidrResult && (
-              <div className="space-y-2 bg-muted p-4 rounded-md">
+              <div className="bg-muted space-y-2 rounded-md p-4">
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <Label className="text-xs text-muted-foreground">Network Address</Label>
+                    <Label className="text-muted-foreground text-xs">Network Address</Label>
                     <div className="font-mono">{cidrResult.networkAddress}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Broadcast Address</Label>
+                    <Label className="text-muted-foreground text-xs">Broadcast Address</Label>
                     <div className="font-mono">{cidrResult.broadcastAddress}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">First Usable IP</Label>
+                    <Label className="text-muted-foreground text-xs">First Usable IP</Label>
                     <div className="font-mono">{cidrResult.firstUsable}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Last Usable IP</Label>
+                    <Label className="text-muted-foreground text-xs">Last Usable IP</Label>
                     <div className="font-mono">{cidrResult.lastUsable}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Subnet Mask</Label>
+                    <Label className="text-muted-foreground text-xs">Subnet Mask</Label>
                     <div className="font-mono">{cidrResult.subnetMask}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Total Hosts</Label>
+                    <Label className="text-muted-foreground text-xs">Total Hosts</Label>
                     <div className="font-mono">{cidrResult.totalHosts.toLocaleString()}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Usable Hosts</Label>
+                    <Label className="text-muted-foreground text-xs">Usable Hosts</Label>
                     <div className="font-mono">{cidrResult.usableHosts.toLocaleString()}</div>
                   </div>
                 </div>
@@ -341,7 +342,7 @@ Usable Hosts: ${cidrResult.usableHosts}`,
                     )
                   }
                 >
-                  {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                  {copied ? <Check className="mr-2 h-4 w-4" /> : <Copy className="mr-2 h-4 w-4" />}
                   Copy Results
                 </Button>
               </div>
@@ -350,7 +351,7 @@ Usable Hosts: ${cidrResult.usableHosts}`,
 
           {/* Subnet Calculator Tab */}
           <TabsContent value="subnet" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
                 <Label htmlFor="ip-address">IP Address</Label>
                 <Input
@@ -376,22 +377,22 @@ Usable Hosts: ${cidrResult.usableHosts}`,
             </Button>
 
             {subnetResult && (
-              <div className="space-y-2 bg-muted p-4 rounded-md">
+              <div className="bg-muted space-y-2 rounded-md p-4">
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <Label className="text-xs text-muted-foreground">Network Address</Label>
+                    <Label className="text-muted-foreground text-xs">Network Address</Label>
                     <div className="font-mono">{subnetResult.networkAddress}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Broadcast Address</Label>
+                    <Label className="text-muted-foreground text-xs">Broadcast Address</Label>
                     <div className="font-mono">{subnetResult.broadcastAddress}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Usable IP Range</Label>
+                    <Label className="text-muted-foreground text-xs">Usable IP Range</Label>
                     <div className="font-mono text-xs">{subnetResult.usableRange}</div>
                   </div>
                   <div>
-                    <Label className="text-xs text-muted-foreground">Total Usable Hosts</Label>
+                    <Label className="text-muted-foreground text-xs">Total Usable Hosts</Label>
                     <div className="font-mono">{subnetResult.totalHosts.toLocaleString()}</div>
                   </div>
                 </div>
@@ -408,7 +409,7 @@ Total Hosts: ${subnetResult.totalHosts}`,
                     )
                   }
                 >
-                  {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                  {copied ? <Check className="mr-2 h-4 w-4" /> : <Copy className="mr-2 h-4 w-4" />}
                   Copy Results
                 </Button>
               </div>

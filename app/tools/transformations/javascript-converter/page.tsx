@@ -1,9 +1,11 @@
-import { JavaScriptConverter } from "@/components/tools/transformations/javascript-converter"
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
+
+import { JavaScriptConverter } from '@/components/tools/transformations/javascript-converter'
 
 export const metadata: Metadata = {
-  title: "JavaScript Converter - DevToolkit Hub",
-  description: "Convert JavaScript to TypeScript or JSON. Transform JS code between different formats and languages.",
+  title: 'JavaScript Converter - DevToolkit Hub',
+  description:
+    'Convert JavaScript to TypeScript or JSON. Transform JS code between different formats and languages.',
 }
 
 export default function JavaScriptConverterPage() {

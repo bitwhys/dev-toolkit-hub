@@ -1,67 +1,74 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { RefreshCw, Copy, Check, ArrowLeftRight } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from 'react'
+import { ArrowLeftRight, Check, Copy, RefreshCw } from 'lucide-react'
+
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Textarea } from '@/components/ui/textarea'
 
 export function DataConverters() {
   const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // Base64 Converter
-  const [base64Input, setBase64Input] = useState("")
-  const [base64Output, setBase64Output] = useState("")
-  const [base64Mode, setBase64Mode] = useState("encode")
+  const [base64Input, setBase64Input] = useState('')
+  const [base64Output, setBase64Output] = useState('')
+  const [base64Mode, setBase64Mode] = useState('encode')
 
   // Hex Converter
-  const [hexInput, setHexInput] = useState("")
-  const [hexOutput, setHexOutput] = useState("")
-  const [hexMode, setHexMode] = useState("encode")
+  const [hexInput, setHexInput] = useState('')
+  const [hexOutput, setHexOutput] = useState('')
+  const [hexMode, setHexMode] = useState('encode')
 
   // URL Encoder/Decoder
-  const [urlInput, setUrlInput] = useState("")
-  const [urlOutput, setUrlOutput] = useState("")
-  const [urlMode, setUrlMode] = useState("encode")
+  const [urlInput, setUrlInput] = useState('')
+  const [urlOutput, setUrlOutput] = useState('')
+  const [urlMode, setUrlMode] = useState('encode')
 
   // Base Converter
-  const [baseInput, setBaseInput] = useState("")
-  const [baseOutput, setBaseOutput] = useState("")
-  const [fromBase, setFromBase] = useState("10")
-  const [toBase, setToBase] = useState("16")
+  const [baseInput, setBaseInput] = useState('')
+  const [baseOutput, setBaseOutput] = useState('')
+  const [fromBase, setFromBase] = useState('10')
+  const [toBase, setToBase] = useState('16')
 
   const convertBase64 = () => {
     try {
-      if (base64Mode === "encode") {
+      if (base64Mode === 'encode') {
         setBase64Output(btoa(base64Input))
       } else {
         setBase64Output(atob(base64Input))
       }
     } catch (error) {
       toast({
-        title: "Conversion Error",
+        title: 'Conversion Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
 
   const convertHex = () => {
     try {
-      if (hexMode === "encode") {
+      if (hexMode === 'encode') {
         // Text to Hex
         const hex = Array.from(hexInput)
-          .map((c) => c.charCodeAt(0).toString(16).padStart(2, "0"))
-          .join("")
+          .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
+          .join('')
         setHexOutput(hex)
       } else {
         // Hex to Text
-        const hex = hexInput.replace(/\s+/g, "")
+        const hex = hexInput.replace(/\s+/g, '')
         const bytes = new Uint8Array(hex.length / 2)
         for (let i = 0; i < hex.length; i += 2) {
           bytes[i / 2] = Number.parseInt(hex.substring(i, i + 2), 16)
@@ -70,25 +77,25 @@ export function DataConverters() {
       }
     } catch (error) {
       toast({
-        title: "Conversion Error",
+        title: 'Conversion Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
 
   const convertUrl = () => {
     try {
-      if (urlMode === "encode") {
+      if (urlMode === 'encode') {
         setUrlOutput(encodeURIComponent(urlInput))
       } else {
         setUrlOutput(decodeURIComponent(urlInput))
       }
     } catch (error) {
       toast({
-        title: "Conversion Error",
+        title: 'Conversion Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -103,15 +110,15 @@ export function DataConverters() {
 
       // Convert to the target base
       if (isNaN(value)) {
-        throw new Error("Invalid input for the selected base")
+        throw new Error('Invalid input for the selected base')
       }
 
       setBaseOutput(value.toString(toBaseInt).toUpperCase())
     } catch (error) {
       toast({
-        title: "Conversion Error",
+        title: 'Conversion Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -120,29 +127,29 @@ export function DataConverters() {
     navigator.clipboard.writeText(text)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "The content has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
 
   const swapInputOutput = (converter: string) => {
     switch (converter) {
-      case "base64":
+      case 'base64':
         setBase64Input(base64Output)
-        setBase64Output("")
+        setBase64Output('')
         break
-      case "hex":
+      case 'hex':
         setHexInput(hexOutput)
-        setHexOutput("")
+        setHexOutput('')
         break
-      case "url":
+      case 'url':
         setUrlInput(urlOutput)
-        setUrlOutput("")
+        setUrlOutput('')
         break
-      case "base":
+      case 'base':
         setBaseInput(baseOutput)
-        setBaseOutput("")
+        setBaseOutput('')
         const tempBase = fromBase
         setFromBase(toBase)
         setToBase(tempBase)
@@ -181,31 +188,42 @@ export function DataConverters() {
                 </SelectContent>
               </Select>
 
-              <Button variant="outline" size="icon" onClick={() => swapInputOutput("base64")}>
+              <Button variant="outline" size="icon" onClick={() => swapInputOutput('base64')}>
                 <ArrowLeftRight className="h-4 w-4" />
               </Button>
             </div>
 
             <div>
-              <Label htmlFor="base64-input">{base64Mode === "encode" ? "Text Input" : "Base64 Input"}</Label>
+              <Label htmlFor="base64-input">
+                {base64Mode === 'encode' ? 'Text Input' : 'Base64 Input'}
+              </Label>
               <Textarea
                 id="base64-input"
-                placeholder={base64Mode === "encode" ? "Enter text to encode..." : "Enter Base64 to decode..."}
+                placeholder={
+                  base64Mode === 'encode' ? 'Enter text to encode...' : 'Enter Base64 to decode...'
+                }
                 value={base64Input}
                 onChange={(e) => setBase64Input(e.target.value)}
-                className="font-mono h-24"
+                className="h-24 font-mono"
               />
             </div>
 
             <Button onClick={convertBase64} disabled={!base64Input}>
-              {base64Mode === "encode" ? "Encode to Base64" : "Decode from Base64"}
+              {base64Mode === 'encode' ? 'Encode to Base64' : 'Decode from Base64'}
             </Button>
 
             {base64Output && (
               <div className="relative">
-                <Label htmlFor="base64-output">{base64Mode === "encode" ? "Base64 Output" : "Decoded Text"}</Label>
+                <Label htmlFor="base64-output">
+                  {base64Mode === 'encode' ? 'Base64 Output' : 'Decoded Text'}
+                </Label>
                 <div className="relative">
-                  <Textarea id="base64-output" value={base64Output} readOnly className="font-mono h-24 pr-10" />
+                  <Textarea
+                    id="base64-output"
+                    value={base64Output}
+                    readOnly
+                    className="h-24 pr-10 font-mono"
+                  />
                   <Button
                     size="sm"
                     variant="ghost"
@@ -232,31 +250,40 @@ export function DataConverters() {
                 </SelectContent>
               </Select>
 
-              <Button variant="outline" size="icon" onClick={() => swapInputOutput("hex")}>
+              <Button variant="outline" size="icon" onClick={() => swapInputOutput('hex')}>
                 <ArrowLeftRight className="h-4 w-4" />
               </Button>
             </div>
 
             <div>
-              <Label htmlFor="hex-input">{hexMode === "encode" ? "Text Input" : "Hex Input"}</Label>
+              <Label htmlFor="hex-input">{hexMode === 'encode' ? 'Text Input' : 'Hex Input'}</Label>
               <Textarea
                 id="hex-input"
-                placeholder={hexMode === "encode" ? "Enter text to convert..." : "Enter hex to convert..."}
+                placeholder={
+                  hexMode === 'encode' ? 'Enter text to convert...' : 'Enter hex to convert...'
+                }
                 value={hexInput}
                 onChange={(e) => setHexInput(e.target.value)}
-                className="font-mono h-24"
+                className="h-24 font-mono"
               />
             </div>
 
             <Button onClick={convertHex} disabled={!hexInput}>
-              {hexMode === "encode" ? "Convert to Hex" : "Convert to Text"}
+              {hexMode === 'encode' ? 'Convert to Hex' : 'Convert to Text'}
             </Button>
 
             {hexOutput && (
               <div className="relative">
-                <Label htmlFor="hex-output">{hexMode === "encode" ? "Hex Output" : "Text Output"}</Label>
+                <Label htmlFor="hex-output">
+                  {hexMode === 'encode' ? 'Hex Output' : 'Text Output'}
+                </Label>
                 <div className="relative">
-                  <Textarea id="hex-output" value={hexOutput} readOnly className="font-mono h-24 pr-10" />
+                  <Textarea
+                    id="hex-output"
+                    value={hexOutput}
+                    readOnly
+                    className="h-24 pr-10 font-mono"
+                  />
                   <Button
                     size="sm"
                     variant="ghost"
@@ -283,7 +310,7 @@ export function DataConverters() {
                 </SelectContent>
               </Select>
 
-              <Button variant="outline" size="icon" onClick={() => swapInputOutput("url")}>
+              <Button variant="outline" size="icon" onClick={() => swapInputOutput('url')}>
                 <ArrowLeftRight className="h-4 w-4" />
               </Button>
             </div>
@@ -292,7 +319,9 @@ export function DataConverters() {
               <Label htmlFor="url-input">Input</Label>
               <Textarea
                 id="url-input"
-                placeholder={urlMode === "encode" ? "Enter text to URL encode..." : "Enter URL encoded text..."}
+                placeholder={
+                  urlMode === 'encode' ? 'Enter text to URL encode...' : 'Enter URL encoded text...'
+                }
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
                 className="h-24"
@@ -300,7 +329,7 @@ export function DataConverters() {
             </div>
 
             <Button onClick={convertUrl} disabled={!urlInput}>
-              {urlMode === "encode" ? "URL Encode" : "URL Decode"}
+              {urlMode === 'encode' ? 'URL Encode' : 'URL Decode'}
             </Button>
 
             {urlOutput && (
@@ -358,7 +387,7 @@ export function DataConverters() {
             </div>
 
             <div className="flex items-center justify-end">
-              <Button variant="outline" size="icon" onClick={() => swapInputOutput("base")}>
+              <Button variant="outline" size="icon" onClick={() => swapInputOutput('base')}>
                 <ArrowLeftRight className="h-4 w-4" />
               </Button>
             </div>
@@ -370,7 +399,7 @@ export function DataConverters() {
                 placeholder={`Enter a number in base ${fromBase}...`}
                 value={baseInput}
                 onChange={(e) => setBaseInput(e.target.value)}
-                className="font-mono h-24"
+                className="h-24 font-mono"
               />
             </div>
 
@@ -382,7 +411,12 @@ export function DataConverters() {
               <div className="relative">
                 <Label htmlFor="base-output">Output (Base {toBase})</Label>
                 <div className="relative">
-                  <Textarea id="base-output" value={baseOutput} readOnly className="font-mono h-24 pr-10" />
+                  <Textarea
+                    id="base-output"
+                    value={baseOutput}
+                    readOnly
+                    className="h-24 pr-10 font-mono"
+                  />
                   <Button
                     size="sm"
                     variant="ghost"

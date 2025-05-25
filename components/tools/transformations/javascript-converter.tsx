@@ -1,19 +1,26 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { FileCode, Copy, Check } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from 'react'
+import { Check, Copy, FileCode } from 'lucide-react'
+
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 
 export function JavaScriptConverter() {
   const { toast } = useToast()
   const [copied, setCopied] = useState(false)
-  const [jsInput, setJsInput] = useState("")
-  const [output, setOutput] = useState("")
-  const [outputType, setOutputType] = useState<"typescript" | "json">("typescript")
+  const [jsInput, setJsInput] = useState('')
+  const [output, setOutput] = useState('')
+  const [outputType, setOutputType] = useState<'typescript' | 'json'>('typescript')
 
   const convertToTypeScript = (js: string): string => {
     try {
@@ -24,20 +31,21 @@ export function JavaScriptConverter() {
         if (!params.trim()) return `function ${funcName}(): void`
 
         const typedParams = params
-          .split(",")
+          .split(',')
           .map((param: string) => {
             const trimmed = param.trim()
-            if (trimmed.includes("=")) {
+            if (trimmed.includes('=')) {
               // Default parameter
-              const [name, defaultValue] = trimmed.split("=").map((s) => s.trim())
+              const [name, defaultValue] = trimmed.split('=').map((s) => s.trim())
               if (defaultValue.match(/^\d+$/)) return `${name}: number = ${defaultValue}`
               if (defaultValue.match(/^["'].*["']$/)) return `${name}: string = ${defaultValue}`
-              if (defaultValue === "true" || defaultValue === "false") return `${name}: boolean = ${defaultValue}`
+              if (defaultValue === 'true' || defaultValue === 'false')
+                return `${name}: boolean = ${defaultValue}`
               return `${name}: any = ${defaultValue}`
             }
             return `${trimmed}: any`
           })
-          .join(", ")
+          .join(', ')
 
         return `function ${funcName}(${typedParams}): void`
       })
@@ -47,12 +55,12 @@ export function JavaScriptConverter() {
         if (!params.trim()) return `const ${funcName} = (): void =>`
 
         const typedParams = params
-          .split(",")
+          .split(',')
           .map((param: string) => {
             const trimmed = param.trim()
             return `${trimmed}: any`
           })
-          .join(", ")
+          .join(', ')
 
         return `const ${funcName} = (${typedParams}): void =>`
       })
@@ -62,9 +70,10 @@ export function JavaScriptConverter() {
         const trimmedValue = value.trim()
         if (trimmedValue.match(/^\d+$/)) return `let ${varName}: number = ${value}`
         if (trimmedValue.match(/^["'].*["']$/)) return `let ${varName}: string = ${value}`
-        if (trimmedValue === "true" || trimmedValue === "false") return `let ${varName}: boolean = ${value}`
-        if (trimmedValue.startsWith("[")) return `let ${varName}: any[] = ${value}`
-        if (trimmedValue.startsWith("{")) return `let ${varName}: object = ${value}`
+        if (trimmedValue === 'true' || trimmedValue === 'false')
+          return `let ${varName}: boolean = ${value}`
+        if (trimmedValue.startsWith('[')) return `let ${varName}: any[] = ${value}`
+        if (trimmedValue.startsWith('{')) return `let ${varName}: object = ${value}`
         return `let ${varName}: any = ${value}`
       })
 
@@ -72,9 +81,10 @@ export function JavaScriptConverter() {
         const trimmedValue = value.trim()
         if (trimmedValue.match(/^\d+$/)) return `const ${varName}: number = ${value}`
         if (trimmedValue.match(/^["'].*["']$/)) return `const ${varName}: string = ${value}`
-        if (trimmedValue === "true" || trimmedValue === "false") return `const ${varName}: boolean = ${value}`
-        if (trimmedValue.startsWith("[")) return `const ${varName}: any[] = ${value}`
-        if (trimmedValue.startsWith("{")) return `const ${varName}: object = ${value}`
+        if (trimmedValue === 'true' || trimmedValue === 'false')
+          return `const ${varName}: boolean = ${value}`
+        if (trimmedValue.startsWith('[')) return `const ${varName}: any[] = ${value}`
+        if (trimmedValue.startsWith('{')) return `const ${varName}: object = ${value}`
         return `const ${varName}: any = ${value}`
       })
 
@@ -87,19 +97,21 @@ export function JavaScriptConverter() {
           if (nameMatch) {
             const varName = nameMatch[1]
             const interfaceName = varName.charAt(0).toUpperCase() + varName.slice(1)
-            interfaces.push(`interface ${interfaceName} {\n  // Define properties here\n  [key: string]: any\n}`)
+            interfaces.push(
+              `interface ${interfaceName} {\n  // Define properties here\n  [key: string]: any\n}`,
+            )
             ts = ts.replace(`const ${varName}: object`, `const ${varName}: ${interfaceName}`)
           }
         })
 
         if (interfaces.length > 0) {
-          ts = interfaces.join("\n\n") + "\n\n" + ts
+          ts = interfaces.join('\n\n') + '\n\n' + ts
         }
       }
 
       return ts
     } catch (error) {
-      throw new Error("Invalid JavaScript format")
+      throw new Error('Invalid JavaScript format')
     }
   }
 
@@ -125,19 +137,19 @@ export function JavaScriptConverter() {
               extractedData[varName] = Number.parseInt(trimmedValue)
             } else if (trimmedValue.match(/^\d*\.\d+$/)) {
               extractedData[varName] = Number.parseFloat(trimmedValue)
-            } else if (trimmedValue === "true") {
+            } else if (trimmedValue === 'true') {
               extractedData[varName] = true
-            } else if (trimmedValue === "false") {
+            } else if (trimmedValue === 'false') {
               extractedData[varName] = false
             } else if (trimmedValue.match(/^["'].*["']$/)) {
               extractedData[varName] = trimmedValue.slice(1, -1)
-            } else if (trimmedValue.startsWith("[") && trimmedValue.endsWith("]")) {
+            } else if (trimmedValue.startsWith('[') && trimmedValue.endsWith(']')) {
               try {
                 extractedData[varName] = JSON.parse(trimmedValue)
               } catch {
                 extractedData[varName] = trimmedValue
               }
-            } else if (trimmedValue.startsWith("{") && trimmedValue.endsWith("}")) {
+            } else if (trimmedValue.startsWith('{') && trimmedValue.endsWith('}')) {
               try {
                 // Simple object parsing
                 const objStr = trimmedValue.replace(/(\w+):/g, '"$1":').replace(/'/g, '"')
@@ -157,7 +169,7 @@ export function JavaScriptConverter() {
       // Extract function names
       const functionMatches = js.match(/function\s+(\w+)/g) || []
       const functions = functionMatches.map((match) => {
-        const name = match.replace("function ", "")
+        const name = match.replace('function ', '')
         return name
       })
 
@@ -167,18 +179,18 @@ export function JavaScriptConverter() {
 
       return JSON.stringify(extractedData, null, 2)
     } catch (error) {
-      throw new Error("Could not extract JSON data from JavaScript")
+      throw new Error('Could not extract JSON data from JavaScript')
     }
   }
 
   const handleConvert = () => {
     try {
-      let result = ""
+      let result = ''
       switch (outputType) {
-        case "typescript":
+        case 'typescript':
           result = convertToTypeScript(jsInput)
           break
-        case "json":
+        case 'json':
           result = convertToJson(jsInput)
           break
       }
@@ -186,9 +198,9 @@ export function JavaScriptConverter() {
       setOutput(result)
     } catch (error) {
       toast({
-        title: "Conversion Error",
+        title: 'Conversion Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -197,8 +209,8 @@ export function JavaScriptConverter() {
     navigator.clipboard.writeText(text)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "The content has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
@@ -236,7 +248,10 @@ const calculateAge = (birthYear) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
-          <Select value={outputType} onValueChange={(value) => setOutputType(value as "typescript" | "json")}>
+          <Select
+            value={outputType}
+            onValueChange={(value) => setOutputType(value as 'typescript' | 'json')}
+          >
             <SelectTrigger className="w-48">
               <SelectValue placeholder="Select output format" />
             </SelectTrigger>
@@ -251,26 +266,26 @@ const calculateAge = (birthYear) => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-medium">JavaScript Input</label>
             <Textarea
               placeholder="Enter JavaScript code..."
               value={jsInput}
               onChange={(e) => setJsInput(e.target.value)}
-              className="font-mono h-80"
+              className="h-80 font-mono"
             />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">
-              {outputType === "typescript" ? "TypeScript Output" : "JSON Data"}
+              {outputType === 'typescript' ? 'TypeScript Output' : 'JSON Data'}
             </label>
             <div className="relative">
               <Textarea
                 value={output}
                 readOnly
-                className="font-mono h-80 pr-10"
+                className="h-80 pr-10 font-mono"
                 placeholder="Converted code will appear here..."
               />
               {output && (
@@ -288,14 +303,14 @@ const calculateAge = (birthYear) => {
         </div>
 
         <Button onClick={handleConvert} disabled={!jsInput} className="w-full">
-          Convert to {outputType === "typescript" ? "TypeScript" : "JSON"}
+          Convert to {outputType === 'typescript' ? 'TypeScript' : 'JSON'}
         </Button>
 
-        <div className="text-xs text-muted-foreground space-y-1">
+        <div className="text-muted-foreground space-y-1 text-xs">
           <p>
             <strong>Conversion notes:</strong>
           </p>
-          <ul className="list-disc list-inside space-y-1 ml-4">
+          <ul className="ml-4 list-inside list-disc space-y-1">
             <li>
               <strong>TypeScript:</strong> Adds basic type annotations based on inferred types
             </li>

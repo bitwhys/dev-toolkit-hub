@@ -1,9 +1,11 @@
-import { JsonTools } from "@/components/tools/json-tools"
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
+
+import { JsonTools } from '@/components/tools/json-tools'
 
 export const metadata: Metadata = {
-  title: "JSON Tools - DevToolkit Hub",
-  description: "Format, minify, validate, and compare JSON data. Complete JSON toolkit for developers.",
+  title: 'JSON Tools - DevToolkit Hub',
+  description:
+    'Format, minify, validate, and compare JSON data. Complete JSON toolkit for developers.',
 }
 
 export default function JsonToolsPage() {
