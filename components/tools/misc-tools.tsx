@@ -1,22 +1,23 @@
-"use client"
+'use client'
 
-import { useState, useRef } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Slider } from "@/components/ui/slider"
-import { Wrench, Camera, Copy, Check, Download } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useRef, useState } from 'react'
+import { Camera, Check, Copy, Download, Wrench } from 'lucide-react'
+
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Textarea } from '@/components/ui/textarea'
 
 export function MiscTools() {
   const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // QR Code Generator
-  const [qrText, setQrText] = useState("")
+  const [qrText, setQrText] = useState('')
   const [qrSize, setQrSize] = useState(200)
   const qrCanvasRef = useRef<HTMLCanvasElement>(null)
   const [qrGenerated, setQrGenerated] = useState(false)
@@ -25,20 +26,20 @@ export function MiscTools() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [scanning, setScanning] = useState(false)
-  const [scanResult, setScanResult] = useState("")
+  const [scanResult, setScanResult] = useState('')
 
   // Color Picker
-  const [colorHex, setColorHex] = useState("#4f46e5")
-  const [colorRgb, setColorRgb] = useState("rgb(79, 70, 229)")
-  const [colorHsl, setColorHsl] = useState("hsl(244, 76%, 59%)")
+  const [colorHex, setColorHex] = useState('#4f46e5')
+  const [colorRgb, setColorRgb] = useState('rgb(79, 70, 229)')
+  const [colorHsl, setColorHsl] = useState('hsl(244, 76%, 59%)')
 
   // Generate QR Code
   const generateQrCode = () => {
     if (!qrText) {
       toast({
-        title: "Error",
-        description: "Please enter text or URL to generate QR code",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Please enter text or URL to generate QR code',
+        variant: 'destructive',
       })
       return
     }
@@ -46,50 +47,50 @@ export function MiscTools() {
     // This is a simplified QR code generator
     // In a real app, you'd use a proper QR code library
     toast({
-      title: "QR Code Generated",
-      description: "QR code has been generated for: " + qrText,
+      title: 'QR Code Generated',
+      description: 'QR code has been generated for: ' + qrText,
     })
 
     // Simulate QR code generation with a colored square
     const canvas = qrCanvasRef.current
     if (canvas) {
-      const ctx = canvas.getContext("2d")
+      const ctx = canvas.getContext('2d')
       if (ctx) {
         // Set canvas size
         canvas.width = qrSize
         canvas.height = qrSize
 
         // Draw a border
-        ctx.fillStyle = "white"
+        ctx.fillStyle = 'white'
         ctx.fillRect(0, 0, qrSize, qrSize)
 
         // Draw a fake QR code pattern
-        ctx.fillStyle = "black"
+        ctx.fillStyle = 'black'
 
         // Draw the outer frame
         ctx.fillRect(0, 0, qrSize, qrSize)
-        ctx.fillStyle = "white"
+        ctx.fillStyle = 'white'
         ctx.fillRect(8, 8, qrSize - 16, qrSize - 16)
-        ctx.fillStyle = "black"
+        ctx.fillStyle = 'black'
 
         // Draw the three corner squares
         // Top-left
         ctx.fillRect(16, 16, qrSize / 5, qrSize / 5)
-        ctx.fillStyle = "white"
+        ctx.fillStyle = 'white'
         ctx.fillRect(24, 24, qrSize / 5 - 16, qrSize / 5 - 16)
-        ctx.fillStyle = "black"
+        ctx.fillStyle = 'black'
 
         // Top-right
         ctx.fillRect(qrSize - qrSize / 5 - 16, 16, qrSize / 5, qrSize / 5)
-        ctx.fillStyle = "white"
+        ctx.fillStyle = 'white'
         ctx.fillRect(qrSize - qrSize / 5 - 8, 24, qrSize / 5 - 16, qrSize / 5 - 16)
-        ctx.fillStyle = "black"
+        ctx.fillStyle = 'black'
 
         // Bottom-left
         ctx.fillRect(16, qrSize - qrSize / 5 - 16, qrSize / 5, qrSize / 5)
-        ctx.fillStyle = "white"
+        ctx.fillStyle = 'white'
         ctx.fillRect(24, qrSize - qrSize / 5 - 8, qrSize / 5 - 16, qrSize / 5 - 16)
-        ctx.fillStyle = "black"
+        ctx.fillStyle = 'black'
 
         // Draw random dots to simulate QR code
         const cellSize = Math.floor(qrSize / 25)
@@ -115,9 +116,9 @@ export function MiscTools() {
   const downloadQrCode = () => {
     const canvas = qrCanvasRef.current
     if (canvas) {
-      const url = canvas.toDataURL("image/png")
-      const link = document.createElement("a")
-      link.download = "qrcode.png"
+      const url = canvas.toDataURL('image/png')
+      const link = document.createElement('a')
+      link.download = 'qrcode.png'
       link.href = url
       link.click()
     }
@@ -127,7 +128,7 @@ export function MiscTools() {
   const startScanner = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" },
+        video: { facingMode: 'environment' },
       })
 
       if (videoRef.current) {
@@ -139,18 +140,18 @@ export function MiscTools() {
         // This is just a placeholder
         setTimeout(() => {
           stopScanner()
-          setScanResult("https://example.com/scanned-url")
+          setScanResult('https://example.com/scanned-url')
           toast({
-            title: "QR Code Scanned",
-            description: "A QR code has been detected",
+            title: 'QR Code Scanned',
+            description: 'A QR code has been detected',
           })
         }, 3000)
       }
     } catch (error) {
       toast({
-        title: "Camera Error",
-        description: "Could not access camera: " + (error as Error).message,
-        variant: "destructive",
+        title: 'Camera Error',
+        description: 'Could not access camera: ' + (error as Error).message,
+        variant: 'destructive',
       })
     }
   }
@@ -168,7 +169,7 @@ export function MiscTools() {
   // Color Converter
   const updateColor = (type: string, value: string) => {
     try {
-      if (type === "hex") {
+      if (type === 'hex') {
         setColorHex(value)
 
         // Convert hex to RGB
@@ -216,7 +217,7 @@ export function MiscTools() {
         }
       }
     } catch (error) {
-      console.error("Error converting color:", error)
+      console.error('Error converting color:', error)
     }
   }
 
@@ -224,8 +225,8 @@ export function MiscTools() {
     navigator.clipboard.writeText(text)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "The content has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
@@ -278,11 +279,11 @@ export function MiscTools() {
 
             {qrGenerated && (
               <div className="flex flex-col items-center space-y-4">
-                <div className="border border-border p-4 bg-white">
+                <div className="border-border border bg-white p-4">
                   <canvas ref={qrCanvasRef} width={qrSize} height={qrSize}></canvas>
                 </div>
                 <Button variant="outline" onClick={downloadQrCode}>
-                  <Download className="h-4 w-4 mr-2" />
+                  <Download className="mr-2 h-4 w-4" />
                   Download QR Code
                 </Button>
               </div>
@@ -291,7 +292,7 @@ export function MiscTools() {
 
           {/* QR Code Scanner Tab */}
           <TabsContent value="qr-scanner" className="space-y-4">
-            <div className="text-sm text-muted-foreground mb-4">
+            <div className="text-muted-foreground mb-4 text-sm">
               Note: QR code scanning requires camera access and works best on mobile devices.
             </div>
 
@@ -302,17 +303,20 @@ export function MiscTools() {
                 </Button>
               ) : (
                 <Button onClick={startScanner}>
-                  <Camera className="h-4 w-4 mr-2" />
+                  <Camera className="mr-2 h-4 w-4" />
                   Start Scanner
                 </Button>
               )}
             </div>
 
-            <div className="relative aspect-video bg-muted rounded-md overflow-hidden">
+            <div className="bg-muted relative aspect-video overflow-hidden rounded-md">
               {scanning ? (
-                <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover"></video>
+                <video
+                  ref={videoRef}
+                  className="absolute inset-0 h-full w-full object-cover"
+                ></video>
               ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
+                <div className="text-muted-foreground flex h-full items-center justify-center">
                   Camera preview will appear here
                 </div>
               )}
@@ -324,7 +328,12 @@ export function MiscTools() {
                 <Label>Scanned Result</Label>
                 <div className="flex">
                   <Input value={scanResult} readOnly />
-                  <Button variant="outline" size="icon" className="ml-2" onClick={() => copyToClipboard(scanResult)}>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="ml-2"
+                    onClick={() => copyToClipboard(scanResult)}
+                  >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                 </div>
@@ -334,34 +343,42 @@ export function MiscTools() {
 
           {/* Color Picker Tab */}
           <TabsContent value="color-picker" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
                 <Label htmlFor="color-picker">Color Picker</Label>
-                <div className="flex mt-1">
+                <div className="mt-1 flex">
                   <Input
                     id="color-picker"
                     type="color"
                     value={colorHex}
-                    onChange={(e) => updateColor("hex", e.target.value)}
-                    className="w-16 h-10 p-1"
+                    onChange={(e) => updateColor('hex', e.target.value)}
+                    className="h-10 w-16 p-1"
                   />
                   <Input
                     value={colorHex}
-                    onChange={(e) => updateColor("hex", e.target.value)}
+                    onChange={(e) => updateColor('hex', e.target.value)}
                     className="ml-2 font-mono"
                   />
                 </div>
               </div>
 
-              <div className="rounded-md overflow-hidden" style={{ backgroundColor: colorHex, height: "100px" }}></div>
+              <div
+                className="overflow-hidden rounded-md"
+                style={{ backgroundColor: colorHex, height: '100px' }}
+              ></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="color-rgb">RGB</Label>
                 <div className="flex">
                   <Input id="color-rgb" value={colorRgb} readOnly className="font-mono" />
-                  <Button variant="outline" size="icon" className="ml-2" onClick={() => copyToClipboard(colorRgb)}>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="ml-2"
+                    onClick={() => copyToClipboard(colorRgb)}
+                  >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                 </div>
@@ -371,7 +388,12 @@ export function MiscTools() {
                 <Label htmlFor="color-hsl">HSL</Label>
                 <div className="flex">
                   <Input id="color-hsl" value={colorHsl} readOnly className="font-mono" />
-                  <Button variant="outline" size="icon" className="ml-2" onClick={() => copyToClipboard(colorHsl)}>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="ml-2"
+                    onClick={() => copyToClipboard(colorHsl)}
+                  >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                 </div>
@@ -379,7 +401,7 @@ export function MiscTools() {
             </div>
 
             <div className="mt-4">
-              <h3 className="text-sm font-medium mb-2">Color Palette</h3>
+              <h3 className="mb-2 text-sm font-medium">Color Palette</h3>
               <div className="grid grid-cols-5 gap-2">
                 {[100, 200, 300, 400, 500, 600, 700, 800, 900].map((shade) => {
                   // This is a simplified shade generator
@@ -390,8 +412,8 @@ export function MiscTools() {
                   return (
                     <div
                       key={shade}
-                      className="h-10 rounded-md flex items-end justify-center p-1 text-xs"
-                      style={{ backgroundColor: bgColor, color: shade > 500 ? "white" : "black" }}
+                      className="flex h-10 items-end justify-center rounded-md p-1 text-xs"
+                      style={{ backgroundColor: bgColor, color: shade > 500 ? 'white' : 'black' }}
                     >
                       {shade}
                     </div>

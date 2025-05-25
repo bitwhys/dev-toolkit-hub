@@ -1,7 +1,9 @@
-"use client"
+'use client'
 
-import { usePathname } from "next/navigation"
-import Link from "next/link"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Home } from 'lucide-react'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,35 +11,34 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Home } from "lucide-react"
+} from '@/components/ui/breadcrumb'
 
 const pathNameMap: Record<string, string> = {
-  tools: "Tools",
-  "jwt-decoder": "JWT Decoder",
-  "crypto-utilities": "Cryptographic Utilities",
-  "data-converters": "Data Format Converters",
-  "json-tools": "JSON Tools",
-  "text-manipulation": "Text Manipulation",
-  "encoders-decoders": "Encoders & Decoders",
-  "uuid-generators": "UUID & Random Generators",
-  "network-utilities": "IP & Network Utilities",
-  "datetime-tools": "Date & Time Tools",
-  "misc-tools": "Miscellaneous Tools",
-  transformations: "Code Transformations",
-  "html-jsx": "HTML ⇄ JSX Converter",
-  "json-schema": "JSON Schema Converter",
-  "css-converter": "CSS Converter",
-  "javascript-converter": "JavaScript Converter",
-  snippets: "Code Snippets",
+  tools: 'Tools',
+  'jwt-decoder': 'JWT Decoder',
+  'crypto-utilities': 'Cryptographic Utilities',
+  'data-converters': 'Data Format Converters',
+  'json-tools': 'JSON Tools',
+  'text-manipulation': 'Text Manipulation',
+  'encoders-decoders': 'Encoders & Decoders',
+  'uuid-generators': 'UUID & Random Generators',
+  'network-utilities': 'IP & Network Utilities',
+  'datetime-tools': 'Date & Time Tools',
+  'misc-tools': 'Miscellaneous Tools',
+  transformations: 'Code Transformations',
+  'html-jsx': 'HTML ⇄ JSX Converter',
+  'json-schema': 'JSON Schema Converter',
+  'css-converter': 'CSS Converter',
+  'javascript-converter': 'JavaScript Converter',
+  snippets: 'Code Snippets',
 }
 
 export function Breadcrumbs() {
   const pathname = usePathname()
-  const pathSegments = pathname.split("/").filter(Boolean)
+  const pathSegments = pathname.split('/').filter(Boolean)
 
   // Don't show breadcrumbs on home page
-  if (pathname === "/") {
+  if (pathname === '/') {
     return null
   }
 
@@ -45,13 +46,13 @@ export function Breadcrumbs() {
 
   // Add home
   breadcrumbItems.push({
-    href: "/",
-    label: "Home",
+    href: '/',
+    label: 'Home',
     isLast: false,
   })
 
   // Build breadcrumb items from path segments
-  let currentPath = ""
+  let currentPath = ''
   pathSegments.forEach((segment, index) => {
     currentPath += `/${segment}`
     const isLast = index === pathSegments.length - 1
@@ -72,13 +73,13 @@ export function Breadcrumbs() {
             <BreadcrumbItem>
               {item.isLast ? (
                 <BreadcrumbPage className="flex items-center">
-                  {index === 0 && <Home className="h-4 w-4 mr-1" />}
+                  {index === 0 && <Home className="mr-1 h-4 w-4" />}
                   {item.label}
                 </BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>
-                  <Link href={item.href} className="flex items-center hover:text-foreground">
-                    {index === 0 && <Home className="h-4 w-4 mr-1" />}
+                  <Link href={item.href} className="hover:text-foreground flex items-center">
+                    {index === 0 && <Home className="mr-1 h-4 w-4" />}
                     {item.label}
                   </Link>
                 </BreadcrumbLink>

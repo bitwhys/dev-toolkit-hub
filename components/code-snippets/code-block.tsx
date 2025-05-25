@@ -1,9 +1,10 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Copy, Check } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from 'react'
+import { Check, Copy } from 'lucide-react'
+
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
 
 interface CodeBlockProps {
   code: string
@@ -20,29 +21,31 @@ export function CodeBlock({ code, language, title, showLineNumbers = true }: Cod
     navigator.clipboard.writeText(code)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "Code has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'Code has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const lines = code.split("\n")
+  const lines = code.split('\n')
 
   return (
     <div className="relative">
       {title && (
-        <div className="flex items-center justify-between bg-muted px-4 py-2 rounded-t-lg border-b">
+        <div className="bg-muted flex items-center justify-between rounded-t-lg border-b px-4 py-2">
           <span className="text-sm font-medium">{title}</span>
-          <span className="text-xs text-muted-foreground uppercase">{language}</span>
+          <span className="text-muted-foreground text-xs uppercase">{language}</span>
         </div>
       )}
 
       <div className="relative">
-        <pre className={`bg-muted p-4 overflow-x-auto text-sm ${title ? "rounded-t-none" : "rounded-lg"} rounded-b-lg`}>
+        <pre
+          className={`bg-muted overflow-x-auto p-4 text-sm ${title ? 'rounded-t-none' : 'rounded-lg'} rounded-b-lg`}
+        >
           <code className="language-{language.toLowerCase()}">
             {showLineNumbers ? (
               <div className="flex">
-                <div className="select-none text-muted-foreground pr-4 border-r border-border mr-4">
+                <div className="text-muted-foreground border-border mr-4 border-r pr-4 select-none">
                   {lines.map((_, index) => (
                     <div key={index} className="text-right">
                       {index + 1}

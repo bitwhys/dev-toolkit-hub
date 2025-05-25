@@ -1,23 +1,25 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { SnippetCard } from "@/components/code-snippets/snippet-card"
-import { SnippetFilters } from "@/components/code-snippets/snippet-filters"
-import { Plus, Code } from "lucide-react"
-import Link from "next/link"
+import { useState } from 'react'
+import Link from 'next/link'
+import { Code, Plus } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+import { SnippetCard } from '@/components/code-snippets/snippet-card'
+import { SnippetFilters } from '@/components/code-snippets/snippet-filters'
 
 // Mock data - in a real app, this would come from an API
 const mockSnippets = [
   {
-    id: "1",
-    title: "React Custom Hook for API Calls",
-    description: "A reusable custom hook for handling API requests with loading states and error handling",
-    language: "React",
-    category: "Hooks",
-    tags: ["react", "hooks", "api", "typescript"],
-    author: "John Doe",
-    createdAt: new Date("2024-01-15"),
+    id: '1',
+    title: 'React Custom Hook for API Calls',
+    description:
+      'A reusable custom hook for handling API requests with loading states and error handling',
+    language: 'React',
+    category: 'Hooks',
+    tags: ['react', 'hooks', 'api', 'typescript'],
+    author: 'John Doe',
+    createdAt: new Date('2024-01-15'),
     views: 1250,
     likes: 89,
     code: `import { useState, useEffect } from 'react';
@@ -49,14 +51,14 @@ export function useApi<T>(url: string) {
 }`,
   },
   {
-    id: "2",
-    title: "TypeScript Utility Types",
-    description: "Collection of useful TypeScript utility types for better type safety",
-    language: "TypeScript",
-    category: "Utilities",
-    tags: ["typescript", "types", "utility", "generics"],
-    author: "Jane Smith",
-    createdAt: new Date("2024-01-10"),
+    id: '2',
+    title: 'TypeScript Utility Types',
+    description: 'Collection of useful TypeScript utility types for better type safety',
+    language: 'TypeScript',
+    category: 'Utilities',
+    tags: ['typescript', 'types', 'utility', 'generics'],
+    author: 'Jane Smith',
+    createdAt: new Date('2024-01-10'),
     views: 2100,
     likes: 156,
     code: `// Deep readonly type
@@ -86,14 +88,15 @@ type StringFields = PickByType<User, string>; // { name: string; email: string; 
 type NonStringFields = OmitByType<User, string>; // { id: number; isActive: boolean; }`,
   },
   {
-    id: "3",
-    title: "CSS Grid Auto-Fit Layout",
-    description: "Responsive grid layout that automatically adjusts columns based on container width",
-    language: "CSS",
-    category: "Components",
-    tags: ["css", "grid", "responsive", "layout"],
-    author: "Mike Johnson",
-    createdAt: new Date("2024-01-08"),
+    id: '3',
+    title: 'CSS Grid Auto-Fit Layout',
+    description:
+      'Responsive grid layout that automatically adjusts columns based on container width',
+    language: 'CSS',
+    category: 'Components',
+    tags: ['css', 'grid', 'responsive', 'layout'],
+    author: 'Mike Johnson',
+    createdAt: new Date('2024-01-08'),
     views: 890,
     likes: 67,
     code: `.auto-grid {
@@ -124,14 +127,14 @@ type NonStringFields = OmitByType<User, string>; // { id: number; isActive: bool
 }`,
   },
   {
-    id: "4",
-    title: "Modern Button Styles",
-    description: "A collection of modern button styles with hover effects and variants",
-    language: "CSS",
-    category: "Components",
-    tags: ["css", "buttons", "ui", "hover-effects"],
-    author: "Sarah Wilson",
-    createdAt: new Date("2024-01-05"),
+    id: '4',
+    title: 'Modern Button Styles',
+    description: 'A collection of modern button styles with hover effects and variants',
+    language: 'CSS',
+    category: 'Components',
+    tags: ['css', 'buttons', 'ui', 'hover-effects'],
+    author: 'Sarah Wilson',
+    createdAt: new Date('2024-01-05'),
     views: 1450,
     likes: 112,
     code: `.btn {
@@ -176,14 +179,14 @@ type NonStringFields = OmitByType<User, string>; // { id: number; isActive: bool
 }`,
   },
   {
-    id: "5",
-    title: "Flexbox Card Layout",
-    description: "Responsive card layout using flexbox with equal height cards",
-    language: "CSS",
-    category: "Components",
-    tags: ["css", "flexbox", "cards", "responsive"],
-    author: "Alex Chen",
-    createdAt: new Date("2024-01-03"),
+    id: '5',
+    title: 'Flexbox Card Layout',
+    description: 'Responsive card layout using flexbox with equal height cards',
+    language: 'CSS',
+    category: 'Components',
+    tags: ['css', 'flexbox', 'cards', 'responsive'],
+    author: 'Alex Chen',
+    createdAt: new Date('2024-01-03'),
     views: 756,
     likes: 45,
     code: `.card-container {
@@ -215,18 +218,18 @@ type NonStringFields = OmitByType<User, string>; // { id: number; isActive: bool
 
 .card-content {
   padding: 1rem 1.5rem 1.5rem;
-  flex-grow: 1;
+  grow: 1;
 }`,
   },
   {
-    id: "6",
-    title: "Python Data Validation Decorator",
-    description: "A decorator for validating function arguments with type checking",
-    language: "Python",
-    category: "Functions",
-    tags: ["python", "validation", "decorator", "types"],
-    author: "Sarah Wilson",
-    createdAt: new Date("2024-01-05"),
+    id: '6',
+    title: 'Python Data Validation Decorator',
+    description: 'A decorator for validating function arguments with type checking',
+    language: 'Python',
+    category: 'Functions',
+    tags: ['python', 'validation', 'decorator', 'types'],
+    author: 'Sarah Wilson',
+    createdAt: new Date('2024-01-05'),
     views: 1450,
     likes: 112,
     code: `from functools import wraps
@@ -284,18 +287,20 @@ export default function SnippetsPage() {
     }
 
     // Language filter
-    if (filters.language && filters.language !== "all") {
+    if (filters.language && filters.language !== 'all') {
       filtered = filtered.filter((snippet) => snippet.language.toLowerCase() === filters.language)
     }
 
     // Category filter
-    if (filters.category && filters.category !== "all") {
+    if (filters.category && filters.category !== 'all') {
       filtered = filtered.filter((snippet) => snippet.category.toLowerCase() === filters.category)
     }
 
     // Tags filter
     if (filters.tags.length > 0) {
-      filtered = filtered.filter((snippet) => filters.tags.every((tag) => snippet.tags.includes(tag)))
+      filtered = filtered.filter((snippet) =>
+        filters.tags.every((tag) => snippet.tags.includes(tag)),
+      )
     }
 
     setFilteredSnippets(filtered)
@@ -306,13 +311,13 @@ export default function SnippetsPage() {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold flex items-center">
+            <h1 className="flex items-center text-3xl font-bold">
               <Code className="mr-3 h-8 w-8" />
               Code Snippets
             </h1>
-            <p className="text-lg text-muted-foreground max-w-3xl">
-              Discover and share useful code snippets. Find solutions, learn new techniques, and contribute to the
-              developer community.
+            <p className="text-muted-foreground max-w-3xl text-lg">
+              Discover and share useful code snippets. Find solutions, learn new techniques, and
+              contribute to the developer community.
             </p>
           </div>
           <Button asChild>
@@ -324,7 +329,7 @@ export default function SnippetsPage() {
         </div>
       </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
         <div className="lg:col-span-1">
           <SnippetFilters onFiltersChange={handleFiltersChange} />
         </div>
@@ -332,8 +337,8 @@ export default function SnippetsPage() {
         <div className="lg:col-span-3">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">
-                {filteredSnippets.length} snippet{filteredSnippets.length !== 1 ? "s" : ""} found
+              <p className="text-muted-foreground text-sm">
+                {filteredSnippets.length} snippet{filteredSnippets.length !== 1 ? 's' : ''} found
               </p>
             </div>
 
@@ -344,10 +349,10 @@ export default function SnippetsPage() {
             </div>
 
             {filteredSnippets.length === 0 && (
-              <div className="text-center py-12">
-                <Code className="mx-auto h-12 w-12 text-muted-foreground" />
+              <div className="py-12 text-center">
+                <Code className="text-muted-foreground mx-auto h-12 w-12" />
                 <h3 className="mt-4 text-lg font-medium">No snippets found</h3>
-                <p className="mt-2 text-muted-foreground">
+                <p className="text-muted-foreground mt-2">
                   Try adjusting your filters or search terms to find what you're looking for.
                 </p>
               </div>

@@ -1,9 +1,11 @@
-import { UuidGenerators } from "@/components/tools/uuid-generators"
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
+
+import { UuidGenerators } from '@/components/tools/uuid-generators'
 
 export const metadata: Metadata = {
-  title: "UUID & Random Generators - DevToolkit Hub",
-  description: "Generate UUIDs, secure passwords, and random strings. Reliable random generation tools for developers.",
+  title: 'UUID & Random Generators - DevToolkit Hub',
+  description:
+    'Generate UUIDs, secure passwords, and random strings. Reliable random generation tools for developers.',
 }
 
 export default function UuidGeneratorsPage() {

@@ -1,30 +1,31 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { FileJson, Copy, Check } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from 'react'
+import { Check, Copy, FileJson } from 'lucide-react'
+
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Textarea } from '@/components/ui/textarea'
 
 export function JsonTools() {
   const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // JSON Formatter
-  const [jsonInput, setJsonInput] = useState("")
-  const [jsonOutput, setJsonOutput] = useState("")
+  const [jsonInput, setJsonInput] = useState('')
+  const [jsonOutput, setJsonOutput] = useState('')
 
   // JSON to YAML
-  const [jsonYamlInput, setJsonYamlInput] = useState("")
-  const [jsonYamlOutput, setJsonYamlOutput] = useState("")
-  const [jsonYamlMode, setJsonYamlMode] = useState("json-to-yaml")
+  const [jsonYamlInput, setJsonYamlInput] = useState('')
+  const [jsonYamlOutput, setJsonYamlOutput] = useState('')
+  const [jsonYamlMode, setJsonYamlMode] = useState('json-to-yaml')
 
   // JSON Diff
-  const [jsonDiffInput1, setJsonDiffInput1] = useState("")
-  const [jsonDiffInput2, setJsonDiffInput2] = useState("")
-  const [jsonDiffOutput, setJsonDiffOutput] = useState("")
+  const [jsonDiffInput1, setJsonDiffInput1] = useState('')
+  const [jsonDiffInput2, setJsonDiffInput2] = useState('')
+  const [jsonDiffOutput, setJsonDiffOutput] = useState('')
 
   const formatJson = () => {
     try {
@@ -32,9 +33,9 @@ export function JsonTools() {
       setJsonOutput(JSON.stringify(parsed, null, 2))
     } catch (error) {
       toast({
-        title: "Invalid JSON",
+        title: 'Invalid JSON',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -45,17 +46,17 @@ export function JsonTools() {
       setJsonOutput(JSON.stringify(parsed))
     } catch (error) {
       toast({
-        title: "Invalid JSON",
+        title: 'Invalid JSON',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
 
   const convertJsonYaml = () => {
     toast({
-      title: "Feature in development",
-      description: "JSON to YAML conversion is currently being implemented.",
+      title: 'Feature in development',
+      description: 'JSON to YAML conversion is currently being implemented.',
     })
   }
 
@@ -70,10 +71,10 @@ export function JsonTools() {
       // Find keys in obj1 that are different or missing in obj2
       Object.keys(obj1).forEach((key) => {
         if (!obj2.hasOwnProperty(key)) {
-          diff[key] = { type: "removed", value: obj1[key] }
+          diff[key] = { type: 'removed', value: obj1[key] }
         } else if (JSON.stringify(obj1[key]) !== JSON.stringify(obj2[key])) {
           diff[key] = {
-            type: "changed",
+            type: 'changed',
             oldValue: obj1[key],
             newValue: obj2[key],
           }
@@ -83,16 +84,16 @@ export function JsonTools() {
       // Find keys in obj2 that are not in obj1
       Object.keys(obj2).forEach((key) => {
         if (!obj1.hasOwnProperty(key)) {
-          diff[key] = { type: "added", value: obj2[key] }
+          diff[key] = { type: 'added', value: obj2[key] }
         }
       })
 
       setJsonDiffOutput(JSON.stringify(diff, null, 2))
     } catch (error) {
       toast({
-        title: "Invalid JSON",
+        title: 'Invalid JSON',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -101,8 +102,8 @@ export function JsonTools() {
     navigator.clipboard.writeText(text)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "The content has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
@@ -131,7 +132,7 @@ export function JsonTools() {
                 placeholder="Paste your JSON here..."
                 value={jsonInput}
                 onChange={(e) => setJsonInput(e.target.value)}
-                className="font-mono h-40"
+                className="h-40 font-mono"
               />
             </div>
 
@@ -147,7 +148,7 @@ export function JsonTools() {
             {jsonOutput && (
               <div className="relative">
                 <div className="relative">
-                  <Textarea value={jsonOutput} readOnly className="font-mono h-40 pr-10" />
+                  <Textarea value={jsonOutput} readOnly className="h-40 pr-10 font-mono" />
                   <Button
                     size="sm"
                     variant="ghost"
@@ -163,16 +164,16 @@ export function JsonTools() {
 
           {/* JSON to YAML Tab */}
           <TabsContent value="converter" className="space-y-4">
-            <div className="flex space-x-2 mb-4">
+            <div className="mb-4 flex space-x-2">
               <Button
-                variant={jsonYamlMode === "json-to-yaml" ? "default" : "outline"}
-                onClick={() => setJsonYamlMode("json-to-yaml")}
+                variant={jsonYamlMode === 'json-to-yaml' ? 'default' : 'outline'}
+                onClick={() => setJsonYamlMode('json-to-yaml')}
               >
                 JSON to YAML
               </Button>
               <Button
-                variant={jsonYamlMode === "yaml-to-json" ? "default" : "outline"}
-                onClick={() => setJsonYamlMode("yaml-to-json")}
+                variant={jsonYamlMode === 'yaml-to-json' ? 'default' : 'outline'}
+                onClick={() => setJsonYamlMode('yaml-to-json')}
               >
                 YAML to JSON
               </Button>
@@ -180,21 +181,25 @@ export function JsonTools() {
 
             <div>
               <Textarea
-                placeholder={jsonYamlMode === "json-to-yaml" ? "Paste your JSON here..." : "Paste your YAML here..."}
+                placeholder={
+                  jsonYamlMode === 'json-to-yaml'
+                    ? 'Paste your JSON here...'
+                    : 'Paste your YAML here...'
+                }
                 value={jsonYamlInput}
                 onChange={(e) => setJsonYamlInput(e.target.value)}
-                className="font-mono h-40"
+                className="h-40 font-mono"
               />
             </div>
 
             <Button onClick={convertJsonYaml} disabled={!jsonYamlInput}>
-              {jsonYamlMode === "json-to-yaml" ? "Convert to YAML" : "Convert to JSON"}
+              {jsonYamlMode === 'json-to-yaml' ? 'Convert to YAML' : 'Convert to JSON'}
             </Button>
 
             {jsonYamlOutput && (
               <div className="relative">
                 <div className="relative">
-                  <Textarea value={jsonYamlOutput} readOnly className="font-mono h-40 pr-10" />
+                  <Textarea value={jsonYamlOutput} readOnly className="h-40 pr-10 font-mono" />
                   <Button
                     size="sm"
                     variant="ghost"
@@ -210,13 +215,13 @@ export function JsonTools() {
 
           {/* JSON Diff Tab */}
           <TabsContent value="diff" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
                 <Textarea
                   placeholder="Paste first JSON here..."
                   value={jsonDiffInput1}
                   onChange={(e) => setJsonDiffInput1(e.target.value)}
-                  className="font-mono h-40"
+                  className="h-40 font-mono"
                 />
               </div>
 
@@ -225,7 +230,7 @@ export function JsonTools() {
                   placeholder="Paste second JSON here..."
                   value={jsonDiffInput2}
                   onChange={(e) => setJsonDiffInput2(e.target.value)}
-                  className="font-mono h-40"
+                  className="h-40 font-mono"
                 />
               </div>
             </div>
@@ -237,7 +242,7 @@ export function JsonTools() {
             {jsonDiffOutput && (
               <div className="relative">
                 <div className="relative">
-                  <Textarea value={jsonDiffOutput} readOnly className="font-mono h-40 pr-10" />
+                  <Textarea value={jsonDiffOutput} readOnly className="h-40 pr-10 font-mono" />
                   <Button
                     size="sm"
                     variant="ghost"

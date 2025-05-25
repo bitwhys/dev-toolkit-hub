@@ -1,39 +1,46 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Calendar, Copy, Check, RefreshCw } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useEffect, useState } from 'react'
+import { Calendar, Check, Copy, RefreshCw } from 'lucide-react'
+
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export function DateTimeTools() {
   const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // Unix Timestamp Converter
-  const [unixTimestamp, setUnixTimestamp] = useState("")
-  const [humanDate, setHumanDate] = useState("")
+  const [unixTimestamp, setUnixTimestamp] = useState('')
+  const [humanDate, setHumanDate] = useState('')
   const [currentUnixTime, setCurrentUnixTime] = useState(0)
 
   // Timezone Converter
-  const [localTime, setLocalTime] = useState("")
+  const [localTime, setLocalTime] = useState('')
   const [timezones, setTimezones] = useState<string[]>([])
   const [selectedTimezones, setSelectedTimezones] = useState<string[]>([
-    "America/New_York",
-    "Europe/London",
-    "Asia/Tokyo",
-    "Australia/Sydney",
+    'America/New_York',
+    'Europe/London',
+    'Asia/Tokyo',
+    'Australia/Sydney',
   ])
   const [timezoneResults, setTimezoneResults] = useState<{ timezone: string; time: string }[]>([])
 
   // ISO8601 Formatter
-  const [isoInput, setIsoInput] = useState("")
-  const [isoOutput, setIsoOutput] = useState("")
-  const [isoFormat, setIsoFormat] = useState("iso")
+  const [isoInput, setIsoInput] = useState('')
+  const [isoOutput, setIsoOutput] = useState('')
+  const [isoFormat, setIsoFormat] = useState('iso')
 
   useEffect(() => {
     // Update current Unix timestamp every second
@@ -45,23 +52,23 @@ export function DateTimeTools() {
     try {
       // This is a simplified list - in a real app, you'd use a complete timezone database
       const tzList = [
-        "UTC",
-        "America/New_York",
-        "America/Chicago",
-        "America/Denver",
-        "America/Los_Angeles",
-        "Europe/London",
-        "Europe/Paris",
-        "Europe/Berlin",
-        "Asia/Tokyo",
-        "Asia/Shanghai",
-        "Asia/Singapore",
-        "Australia/Sydney",
-        "Pacific/Auckland",
+        'UTC',
+        'America/New_York',
+        'America/Chicago',
+        'America/Denver',
+        'America/Los_Angeles',
+        'Europe/London',
+        'Europe/Paris',
+        'Europe/Berlin',
+        'Asia/Tokyo',
+        'Asia/Shanghai',
+        'Asia/Singapore',
+        'Australia/Sydney',
+        'Pacific/Auckland',
       ]
       setTimezones(tzList)
     } catch (error) {
-      console.error("Error getting timezones:", error)
+      console.error('Error getting timezones:', error)
     }
 
     return () => clearInterval(interval)
@@ -71,16 +78,16 @@ export function DateTimeTools() {
     try {
       const timestamp = Number.parseInt(unixTimestamp)
       if (isNaN(timestamp)) {
-        throw new Error("Invalid timestamp")
+        throw new Error('Invalid timestamp')
       }
 
       const date = new Date(timestamp * 1000)
       setHumanDate(date.toISOString())
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -89,15 +96,15 @@ export function DateTimeTools() {
     try {
       const date = new Date(humanDate)
       if (isNaN(date.getTime())) {
-        throw new Error("Invalid date")
+        throw new Error('Invalid date')
       }
 
       setUnixTimestamp(Math.floor(date.getTime() / 1000).toString())
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -106,30 +113,30 @@ export function DateTimeTools() {
     try {
       const date = localTime ? new Date(localTime) : new Date()
       if (isNaN(date.getTime())) {
-        throw new Error("Invalid date")
+        throw new Error('Invalid date')
       }
 
       const results = selectedTimezones.map((timezone) => {
         try {
           const options: Intl.DateTimeFormatOptions = {
             timeZone: timezone,
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
             hour12: false,
           }
 
           return {
             timezone,
-            time: new Intl.DateTimeFormat("en-US", options).format(date),
+            time: new Intl.DateTimeFormat('en-US', options).format(date),
           }
         } catch (error) {
           return {
             timezone,
-            time: "Error: Invalid timezone",
+            time: 'Error: Invalid timezone',
           }
         }
       })
@@ -137,9 +144,9 @@ export function DateTimeTools() {
       setTimezoneResults(results)
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -148,24 +155,24 @@ export function DateTimeTools() {
     try {
       const date = new Date(isoInput)
       if (isNaN(date.getTime())) {
-        throw new Error("Invalid date")
+        throw new Error('Invalid date')
       }
 
-      let formatted = ""
+      let formatted = ''
       switch (isoFormat) {
-        case "iso":
+        case 'iso':
           formatted = date.toISOString()
           break
-        case "date":
-          formatted = date.toISOString().split("T")[0]
+        case 'date':
+          formatted = date.toISOString().split('T')[0]
           break
-        case "datetime":
-          formatted = date.toISOString().replace("T", " ").split(".")[0]
+        case 'datetime':
+          formatted = date.toISOString().replace('T', ' ').split('.')[0]
           break
-        case "rfc3339":
-          formatted = date.toISOString().replace(".000Z", "Z")
+        case 'rfc3339':
+          formatted = date.toISOString().replace('.000Z', 'Z')
           break
-        case "rfc2822":
+        case 'rfc2822':
           formatted = date.toUTCString()
           break
       }
@@ -173,9 +180,9 @@ export function DateTimeTools() {
       setIsoOutput(formatted)
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: (error as Error).message,
-        variant: "destructive",
+        variant: 'destructive',
       })
     }
   }
@@ -184,8 +191,8 @@ export function DateTimeTools() {
     navigator.clipboard.writeText(text)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "The content has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
@@ -209,12 +216,12 @@ export function DateTimeTools() {
 
           {/* Unix Timestamp Converter Tab */}
           <TabsContent value="unix" className="space-y-4">
-            <div className="bg-muted p-4 rounded-md text-center">
-              <div className="text-sm text-muted-foreground">Current Unix Timestamp</div>
-              <div className="text-2xl font-mono font-bold">{currentUnixTime}</div>
+            <div className="bg-muted rounded-md p-4 text-center">
+              <div className="text-muted-foreground text-sm">Current Unix Timestamp</div>
+              <div className="font-mono text-2xl font-bold">{currentUnixTime}</div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="unix-timestamp">Unix Timestamp</Label>
                 <div className="flex">
@@ -244,7 +251,7 @@ export function DateTimeTools() {
                 <Input
                   id="human-date"
                   type="datetime-local"
-                  value={humanDate ? humanDate.substring(0, 16) : ""}
+                  value={humanDate ? humanDate.substring(0, 16) : ''}
                   onChange={(e) => setHumanDate(e.target.value)}
                 />
                 <Button onClick={convertHumanDate} disabled={!humanDate} size="sm">
@@ -290,13 +297,18 @@ export function DateTimeTools() {
                 </SelectContent>
               </Select>
 
-              <div className="flex flex-wrap gap-2 mt-2">
+              <div className="mt-2 flex flex-wrap gap-2">
                 {selectedTimezones.map((tz) => (
-                  <div key={tz} className="bg-muted px-3 py-1 rounded-full text-sm flex items-center">
+                  <div
+                    key={tz}
+                    className="bg-muted flex items-center rounded-full px-3 py-1 text-sm"
+                  >
                     {tz}
                     <button
-                      className="ml-2 text-muted-foreground hover:text-foreground"
-                      onClick={() => setSelectedTimezones(selectedTimezones.filter((t) => t !== tz))}
+                      className="text-muted-foreground hover:text-foreground ml-2"
+                      onClick={() =>
+                        setSelectedTimezones(selectedTimezones.filter((t) => t !== tz))
+                      }
                     >
                       ×
                     </button>
@@ -309,12 +321,12 @@ export function DateTimeTools() {
 
             {timezoneResults.length > 0 && (
               <div className="space-y-2">
-                <div className="bg-muted p-4 rounded-md">
+                <div className="bg-muted rounded-md p-4">
                   <div className="grid gap-2">
                     {timezoneResults.map((result) => (
                       <div
                         key={result.timezone}
-                        className="flex justify-between items-center border-b border-border pb-2 last:border-0 last:pb-0"
+                        className="border-border flex items-center justify-between border-b pb-2 last:border-0 last:pb-0"
                       >
                         <div className="font-medium">{result.timezone}</div>
                         <div className="font-mono">{result.time}</div>
@@ -325,9 +337,13 @@ export function DateTimeTools() {
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => copyToClipboard(timezoneResults.map((r) => `${r.timezone}: ${r.time}`).join("\n"))}
+                  onClick={() =>
+                    copyToClipboard(
+                      timezoneResults.map((r) => `${r.timezone}: ${r.time}`).join('\n'),
+                    )
+                  }
                 >
-                  {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                  {copied ? <Check className="mr-2 h-4 w-4" /> : <Copy className="mr-2 h-4 w-4" />}
                   Copy Results
                 </Button>
               </div>
@@ -344,7 +360,7 @@ export function DateTimeTools() {
                 value={isoInput}
                 onChange={(e) => setIsoInput(e.target.value)}
               />
-              <div className="text-xs text-muted-foreground">
+              <div className="text-muted-foreground text-xs">
                 Enter a date in any format. Current date will be used if empty.
               </div>
             </div>
@@ -372,7 +388,12 @@ export function DateTimeTools() {
                 <Label htmlFor="iso-output">Formatted Output</Label>
                 <div className="flex">
                   <Input id="iso-output" value={isoOutput} readOnly className="font-mono" />
-                  <Button variant="outline" size="icon" className="ml-2" onClick={() => copyToClipboard(isoOutput)}>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="ml-2"
+                    onClick={() => copyToClipboard(isoOutput)}
+                  >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                 </div>

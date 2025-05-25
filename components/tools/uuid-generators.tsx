@@ -1,25 +1,25 @@
-"use client"
+'use client'
 
-import { Textarea } from "@/components/ui/textarea"
+import { useState } from 'react'
+import { Check, Copy, FingerprintIcon as FingerPrint, RefreshCw } from 'lucide-react'
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Slider } from "@/components/ui/slider"
-import { FingerprintIcon as FingerPrint, Copy, Check, RefreshCw } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Textarea } from '@/components/ui/textarea'
 
 export function UuidGenerators() {
   const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // UUID Generator
-  const [uuidVersion, setUuidVersion] = useState("v4")
-  const [uuidOutput, setUuidOutput] = useState("")
+  const [uuidVersion, setUuidVersion] = useState('v4')
+  const [uuidOutput, setUuidOutput] = useState('')
   const [uuidCount, setUuidCount] = useState(1)
   const [uuidList, setUuidList] = useState<string[]>([])
 
@@ -29,14 +29,14 @@ export function UuidGenerators() {
   const [includeLowercase, setIncludeLowercase] = useState(true)
   const [includeNumbers, setIncludeNumbers] = useState(true)
   const [includeSymbols, setIncludeSymbols] = useState(true)
-  const [passwordOutput, setPasswordOutput] = useState("")
+  const [passwordOutput, setPasswordOutput] = useState('')
 
   const generateUuid = () => {
     // Simple UUID v4 implementation
     const generateV4 = () => {
-      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
         const r = (Math.random() * 16) | 0,
-          v = c === "x" ? r : (r & 0x3) | 0x8
+          v = c === 'x' ? r : (r & 0x3) | 0x8
         return v.toString(16)
       })
     }
@@ -45,28 +45,28 @@ export function UuidGenerators() {
     const generateV1 = () => {
       const now = new Date()
       const timestamp = now.getTime()
-      const timestampHex = timestamp.toString(16).padStart(12, "0")
+      const timestampHex = timestamp.toString(16).padStart(12, '0')
 
       return `${timestampHex.slice(0, 8)}-${timestampHex.slice(8, 12)}-1${timestampHex.slice(12, 15)}-${Math.floor(Math.random() * 4 + 8).toString(16)}${Math.random().toString(16).slice(2, 5)}-${Math.random().toString(16).slice(2, 14)}`
     }
 
     const newUuids = []
     for (let i = 0; i < uuidCount; i++) {
-      const uuid = uuidVersion === "v4" ? generateV4() : generateV1()
+      const uuid = uuidVersion === 'v4' ? generateV4() : generateV1()
       newUuids.push(uuid)
     }
 
     setUuidList(newUuids)
-    setUuidOutput(newUuids.join("\n"))
+    setUuidOutput(newUuids.join('\n'))
   }
 
   const generatePassword = () => {
-    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    const lowercase = "abcdefghijklmnopqrstuvwxyz"
-    const numbers = "0123456789"
-    const symbols = "!@#$%^&*()_+~`|}{[]:;?><,./-="
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz'
+    const numbers = '0123456789'
+    const symbols = '!@#$%^&*()_+~`|}{[]:;?><,./-='
 
-    let chars = ""
+    let chars = ''
     if (includeUppercase) chars += uppercase
     if (includeLowercase) chars += lowercase
     if (includeNumbers) chars += numbers
@@ -74,14 +74,14 @@ export function UuidGenerators() {
 
     if (chars.length === 0) {
       toast({
-        title: "Error",
-        description: "Please select at least one character type",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Please select at least one character type',
+        variant: 'destructive',
       })
       return
     }
 
-    let password = ""
+    let password = ''
     for (let i = 0; i < passwordLength; i++) {
       password += chars.charAt(Math.floor(Math.random() * chars.length))
     }
@@ -93,8 +93,8 @@ export function UuidGenerators() {
     navigator.clipboard.writeText(text)
     setCopied(true)
     toast({
-      title: "Copied to clipboard",
-      description: "The content has been copied to your clipboard.",
+      title: 'Copied to clipboard',
+      description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)
   }
@@ -117,12 +117,12 @@ export function UuidGenerators() {
 
           {/* UUID Generator Tab */}
           <TabsContent value="uuid" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div>
                 <Label htmlFor="uuid-version">UUID Version</Label>
                 <select
                   id="uuid-version"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   value={uuidVersion}
                   onChange={(e) => setUuidVersion(e.target.value)}
                 >
@@ -145,7 +145,7 @@ export function UuidGenerators() {
 
               <div className="flex items-end">
                 <Button onClick={generateUuid} className="w-full">
-                  Generate UUID{uuidCount > 1 ? "s" : ""}
+                  Generate UUID{uuidCount > 1 ? 's' : ''}
                 </Button>
               </div>
             </div>
@@ -153,7 +153,7 @@ export function UuidGenerators() {
             {uuidOutput && (
               <div className="relative">
                 <div className="relative">
-                  <Textarea value={uuidOutput} readOnly className="font-mono h-40 pr-10" />
+                  <Textarea value={uuidOutput} readOnly className="h-40 pr-10 font-mono" />
                   <Button
                     size="sm"
                     variant="ghost"
@@ -225,9 +225,19 @@ export function UuidGenerators() {
             {passwordOutput && (
               <div className="relative mt-4">
                 <Label htmlFor="password-output">Generated Password</Label>
-                <div className="flex mt-1">
-                  <Input id="password-output" value={passwordOutput} readOnly className="font-mono" />
-                  <Button variant="outline" size="icon" className="ml-2" onClick={() => generatePassword()}>
+                <div className="mt-1 flex">
+                  <Input
+                    id="password-output"
+                    value={passwordOutput}
+                    readOnly
+                    className="font-mono"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="ml-2"
+                    onClick={() => generatePassword()}
+                  >
                     <RefreshCw className="h-4 w-4" />
                   </Button>
                   <Button

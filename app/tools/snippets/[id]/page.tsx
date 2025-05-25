@@ -1,26 +1,29 @@
-"use client"
-import { notFound } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { CodeBlock } from "@/components/code-snippets/code-block"
-import { SnippetMetaSidebar } from "@/components/code-snippets/snippet-meta-sidebar"
-import { CSSPreview } from "@/components/code-snippets/css-preview"
-import { Eye, Heart, Calendar, User } from "lucide-react"
-import { formatDistanceToNow } from "date-fns"
+'use client'
+
+import { notFound } from 'next/navigation'
+import { formatDistanceToNow } from 'date-fns'
+import { Calendar, Eye, Heart, User } from 'lucide-react'
+
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { CodeBlock } from '@/components/code-snippets/code-block'
+import { CSSPreview } from '@/components/code-snippets/css-preview'
+import { SnippetMetaSidebar } from '@/components/code-snippets/snippet-meta-sidebar'
 
 // Mock data - in a real app, this would come from an API
 const mockSnippets = [
   {
-    id: "1",
-    title: "React Custom Hook for API Calls",
-    description: "A reusable custom hook for handling API requests with loading states and error handling",
-    language: "React",
-    category: "Hooks",
-    tags: ["react", "hooks", "api", "typescript"],
-    author: "John Doe",
-    authorAvatar: "/placeholder.svg?height=40&width=40",
-    createdAt: new Date("2024-01-15"),
-    updatedAt: new Date("2024-01-16"),
+    id: '1',
+    title: 'React Custom Hook for API Calls',
+    description:
+      'A reusable custom hook for handling API requests with loading states and error handling',
+    language: 'React',
+    category: 'Hooks',
+    tags: ['react', 'hooks', 'api', 'typescript'],
+    author: 'John Doe',
+    authorAvatar: '/placeholder.svg?height=40&width=40',
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date('2024-01-16'),
     views: 1250,
     likes: 89,
     downloads: 234,
@@ -99,16 +102,17 @@ You can extend this hook to include features like:
 This hook requires React 16.8+ for hooks support.`,
   },
   {
-    id: "3",
-    title: "CSS Grid Auto-Fit Layout",
-    description: "Responsive grid layout that automatically adjusts columns based on container width",
-    language: "CSS",
-    category: "Components",
-    tags: ["css", "grid", "responsive", "layout"],
-    author: "Mike Johnson",
-    authorAvatar: "/placeholder.svg?height=40&width=40",
-    createdAt: new Date("2024-01-08"),
-    updatedAt: new Date("2024-01-08"),
+    id: '3',
+    title: 'CSS Grid Auto-Fit Layout',
+    description:
+      'Responsive grid layout that automatically adjusts columns based on container width',
+    language: 'CSS',
+    category: 'Components',
+    tags: ['css', 'grid', 'responsive', 'layout'],
+    author: 'Mike Johnson',
+    authorAvatar: '/placeholder.svg?height=40&width=40',
+    createdAt: new Date('2024-01-08'),
+    updatedAt: new Date('2024-01-08'),
     views: 890,
     likes: 67,
     downloads: 123,
@@ -181,16 +185,16 @@ Perfect for:
 Supported in all modern browsers. For older browsers, consider a flexbox fallback.`,
   },
   {
-    id: "4",
-    title: "Modern Button Styles",
-    description: "A collection of modern button styles with hover effects and variants",
-    language: "CSS",
-    category: "Components",
-    tags: ["css", "buttons", "ui", "hover-effects"],
-    author: "Sarah Wilson",
-    authorAvatar: "/placeholder.svg?height=40&width=40",
-    createdAt: new Date("2024-01-05"),
-    updatedAt: new Date("2024-01-05"),
+    id: '4',
+    title: 'Modern Button Styles',
+    description: 'A collection of modern button styles with hover effects and variants',
+    language: 'CSS',
+    category: 'Components',
+    tags: ['css', 'buttons', 'ui', 'hover-effects'],
+    author: 'Sarah Wilson',
+    authorAvatar: '/placeholder.svg?height=40&width=40',
+    createdAt: new Date('2024-01-05'),
+    updatedAt: new Date('2024-01-05'),
     views: 1450,
     likes: 112,
     downloads: 89,
@@ -304,16 +308,16 @@ Easy to extend with additional variants:
 - Icon buttons`,
   },
   {
-    id: "5",
-    title: "Flexbox Card Layout",
-    description: "Responsive card layout using flexbox with equal height cards",
-    language: "CSS",
-    category: "Components",
-    tags: ["css", "flexbox", "cards", "responsive"],
-    author: "Alex Chen",
-    authorAvatar: "/placeholder.svg?height=40&width=40",
-    createdAt: new Date("2024-01-03"),
-    updatedAt: new Date("2024-01-03"),
+    id: '5',
+    title: 'Flexbox Card Layout',
+    description: 'Responsive card layout using flexbox with equal height cards',
+    language: 'CSS',
+    category: 'Components',
+    tags: ['css', 'flexbox', 'cards', 'responsive'],
+    author: 'Alex Chen',
+    authorAvatar: '/placeholder.svg?height=40&width=40',
+    createdAt: new Date('2024-01-03'),
+    updatedAt: new Date('2024-01-03'),
     views: 756,
     likes: 45,
     downloads: 67,
@@ -356,7 +360,7 @@ Easy to extend with additional variants:
 
 .card-content {
   padding: 1rem 1.5rem 1.5rem;
-  flex-grow: 1;
+  grow: 1;
 }
 
 .card-content p {
@@ -457,25 +461,25 @@ export default function SnippetPage({ params }: SnippetPageProps) {
     notFound()
   }
 
-  const shouldShowPreview = snippet.language === "CSS" && snippet.hasPreview
+  const shouldShowPreview = snippet.language === 'CSS' && snippet.hasPreview
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
       {/* Main Content */}
-      <div className="lg:col-span-3 space-y-8">
+      <div className="space-y-8 lg:col-span-3">
         {/* Header */}
         <div className="space-y-4">
           <div className="flex items-start justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold">{snippet.title}</h1>
-              <p className="text-lg text-muted-foreground">{snippet.description}</p>
+              <p className="text-muted-foreground text-lg">{snippet.description}</p>
             </div>
             <Badge variant="secondary" className="text-sm">
               {snippet.language}
             </Badge>
           </div>
 
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-6 text-sm">
             <div className="flex items-center gap-1">
               <User className="h-4 w-4" />
               <span>by {snippet.author}</span>
@@ -536,7 +540,7 @@ export default function SnippetPage({ params }: SnippetPageProps) {
             <Separator />
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">Guide & Overview</h2>
-              <div className="prose prose-sm max-w-none dark:prose-invert">
+              <div className="prose prose-sm dark:prose-invert max-w-none">
                 <div dangerouslySetInnerHTML={{ __html: parseMarkdown(snippet.guide) }} />
               </div>
             </div>
@@ -554,19 +558,19 @@ export default function SnippetPage({ params }: SnippetPageProps) {
 
 function getFileExtension(language: string): string {
   const extensions: Record<string, string> = {
-    JavaScript: "js",
-    TypeScript: "ts",
-    Python: "py",
-    React: "jsx",
-    CSS: "css",
-    HTML: "html",
-    Bash: "sh",
-    SQL: "sql",
-    Go: "go",
-    Rust: "rs",
-    Java: "java",
+    JavaScript: 'js',
+    TypeScript: 'ts',
+    Python: 'py',
+    React: 'jsx',
+    CSS: 'css',
+    HTML: 'html',
+    Bash: 'sh',
+    SQL: 'sql',
+    Go: 'go',
+    Rust: 'rs',
+    Java: 'java',
   }
-  return extensions[language] || "txt"
+  return extensions[language] || 'txt'
 }
 
 // Simple markdown parser for the guide content
@@ -575,10 +579,13 @@ function parseMarkdown(markdown: string): string {
     .replace(/^## (.*$)/gim, '<h2 class="text-lg font-semibold mt-6 mb-3">$1</h2>')
     .replace(/^### (.*$)/gim, '<h3 class="text-base font-medium mt-4 mb-2">$1</h3>')
     .replace(/^#### (.*$)/gim, '<h4 class="text-sm font-medium mt-3 mb-2">$1</h4>')
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/`(.*?)`/g, '<code class="bg-muted px-1 py-0.5 rounded text-sm">$1</code>')
-    .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-muted p-4 rounded-lg overflow-x-auto"><code>$2</code></pre>')
+    .replace(
+      /```(\w+)?\n([\s\S]*?)```/g,
+      '<pre class="bg-muted p-4 rounded-lg overflow-x-auto"><code>$2</code></pre>',
+    )
     .replace(/^- (.*$)/gim, '<li class="ml-4">$1</li>')
     .replace(/\n\n/g, '</p><p class="mb-4">')
     .replace(/^(?!<[h|l|p])(.+)$/gm, '<p class="mb-4">$1</p>')

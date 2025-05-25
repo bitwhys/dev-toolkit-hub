@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
+import { useState } from 'react'
+import { AlertCircle, CheckCircle2, Key } from 'lucide-react'
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Key, AlertCircle, CheckCircle2 } from "lucide-react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Textarea } from '@/components/ui/textarea'
 
 export function JwtDecoder() {
-  const [jwt, setJwt] = useState("")
+  const [jwt, setJwt] = useState('')
   const [decodedHeader, setDecodedHeader] = useState<any>(null)
   const [decodedPayload, setDecodedPayload] = useState<any>(null)
   const [isValid, setIsValid] = useState<boolean | null>(null)
@@ -20,27 +20,27 @@ export function JwtDecoder() {
     setError(null)
 
     try {
-      if (!token || token.trim() === "") {
+      if (!token || token.trim() === '') {
         setDecodedHeader(null)
         setDecodedPayload(null)
         setIsValid(null)
         return
       }
 
-      const parts = token.split(".")
+      const parts = token.split('.')
       if (parts.length !== 3) {
-        throw new Error("Invalid JWT format. Expected 3 parts separated by dots.")
+        throw new Error('Invalid JWT format. Expected 3 parts separated by dots.')
       }
 
       // Decode header
       const headerBase64 = parts[0]
-      const headerJson = atob(headerBase64.replace(/-/g, "+").replace(/_/g, "/"))
+      const headerJson = atob(headerBase64.replace(/-/g, '+').replace(/_/g, '/'))
       const header = JSON.parse(headerJson)
       setDecodedHeader(header)
 
       // Decode payload
       const payloadBase64 = parts[1]
-      const payloadJson = atob(payloadBase64.replace(/-/g, "+").replace(/_/g, "/"))
+      const payloadJson = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'))
       const payload = JSON.parse(payloadJson)
       setDecodedPayload(payload)
 
@@ -84,7 +84,7 @@ export function JwtDecoder() {
           <div>
             <Textarea
               placeholder="Paste your JWT token here..."
-              className="font-mono h-24"
+              className="h-24 font-mono"
               value={jwt}
               onChange={handleJwtChange}
             />
@@ -99,11 +99,11 @@ export function JwtDecoder() {
           )}
 
           {isValid !== null && (
-            <Alert variant={isValid ? "default" : "destructive"}>
+            <Alert variant={isValid ? 'default' : 'destructive'}>
               {isValid ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
-              <AlertTitle>{isValid ? "Valid Token" : "Expired Token"}</AlertTitle>
+              <AlertTitle>{isValid ? 'Valid Token' : 'Expired Token'}</AlertTitle>
               <AlertDescription>
-                {isValid ? "This token has not expired yet." : "This token has expired."}
+                {isValid ? 'This token has not expired yet.' : 'This token has expired.'}
               </AlertDescription>
             </Alert>
           )}
@@ -115,16 +115,16 @@ export function JwtDecoder() {
                 <TabsTrigger value="payload">Payload</TabsTrigger>
               </TabsList>
               <TabsContent value="header">
-                <div className="p-4 bg-muted rounded-md mt-2">
-                  <pre className="whitespace-pre-wrap break-all font-mono text-sm">
-                    {decodedHeader ? formatJson(decodedHeader) : "No header data"}
+                <div className="bg-muted mt-2 rounded-md p-4">
+                  <pre className="font-mono text-sm break-all whitespace-pre-wrap">
+                    {decodedHeader ? formatJson(decodedHeader) : 'No header data'}
                   </pre>
                 </div>
               </TabsContent>
               <TabsContent value="payload">
-                <div className="p-4 bg-muted rounded-md mt-2">
-                  <pre className="whitespace-pre-wrap break-all font-mono text-sm">
-                    {decodedPayload ? formatJson(decodedPayload) : "No payload data"}
+                <div className="bg-muted mt-2 rounded-md p-4">
+                  <pre className="font-mono text-sm break-all whitespace-pre-wrap">
+                    {decodedPayload ? formatJson(decodedPayload) : 'No payload data'}
                   </pre>
                 </div>
               </TabsContent>
