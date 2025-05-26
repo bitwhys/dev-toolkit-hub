@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { Check, Copy, FileCode } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -16,7 +16,6 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 
 export function JavaScriptConverter() {
-  const { toast } = useToast()
   const [copied, setCopied] = useState(false)
   const [jsInput, setJsInput] = useState('')
   const [output, setOutput] = useState('')

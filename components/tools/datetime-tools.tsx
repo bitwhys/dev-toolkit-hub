@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { Calendar, Check, Copy, RefreshCw } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -19,7 +19,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { NumberInput } from '@/components/number-input'
 
 export function DateTimeTools() {
-  const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // Unix Timestamp Converter
@@ -85,10 +84,10 @@ export function DateTimeTools() {
       const date = new Date(timestamp * 1000)
       setHumanDate(date.toISOString())
     } catch (error) {
-      toast({
-        title: 'Error',
+      toast('Error', {
         description: (error as Error).message,
-        variant: 'destructive',
+        className:
+          'destructive group border-destructive bg-destructive text-destructive-foreground',
       })
     }
   }
@@ -102,10 +101,10 @@ export function DateTimeTools() {
 
       setUnixTimestamp(Math.floor(date.getTime() / 1000).toString())
     } catch (error) {
-      toast({
-        title: 'Error',
+      toast('Error', {
         description: (error as Error).message,
-        variant: 'destructive',
+        className:
+          'destructive group border-destructive bg-destructive text-destructive-foreground',
       })
     }
   }
@@ -144,10 +143,10 @@ export function DateTimeTools() {
 
       setTimezoneResults(results)
     } catch (error) {
-      toast({
-        title: 'Error',
+      toast('Error', {
         description: (error as Error).message,
-        variant: 'destructive',
+        className:
+          'destructive group border-destructive bg-destructive text-destructive-foreground',
       })
     }
   }
@@ -180,10 +179,10 @@ export function DateTimeTools() {
 
       setIsoOutput(formatted)
     } catch (error) {
-      toast({
-        title: 'Error',
+      toast('Error', {
         description: (error as Error).message,
-        variant: 'destructive',
+        className:
+          'destructive group border-destructive bg-destructive text-destructive-foreground',
       })
     }
   }
@@ -191,8 +190,7 @@ export function DateTimeTools() {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
     setCopied(true)
-    toast({
-      title: 'Copied to clipboard',
+    toast('Copied to clipboard', {
       description: 'The content has been copied to your clipboard.',
     })
     setTimeout(() => setCopied(false), 2000)

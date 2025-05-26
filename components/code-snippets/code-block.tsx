@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { Check, Copy } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 
 interface CodeBlockProps {
@@ -14,7 +14,6 @@ interface CodeBlockProps {
 }
 
 export function CodeBlock({ code, language, title, showLineNumbers = true }: CodeBlockProps) {
-  const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   const handleCopy = () => {

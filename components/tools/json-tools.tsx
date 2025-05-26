@@ -2,15 +2,14 @@
 
 import { useState } from 'react'
 import { Check, Copy, FileJson } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 
 export function JsonTools() {
-  const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
   // JSON Formatter

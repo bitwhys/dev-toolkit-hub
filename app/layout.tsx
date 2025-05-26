@@ -6,7 +6,7 @@ import '@/styles/globals.css'
 
 import { cn } from '@/lib/utils'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from '@/components/ui/sonner'
 import { AppSidebar } from '@/components/app-sidebar'
 import { SiteHeader } from '@/components/site-header'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -83,11 +83,9 @@ export default function RootLayout({
       suppressHydrationWarning
       className="creightit"
       data-accent-color="lime"
-      data-gray-color="sand"
+      data-gray-color="slate"
     >
-      <body
-        className={cn(geistSans.variable, geistMono.variable, 'bg-gray-2 font-sans antialiased')}
-      >
+      <body className={cn(geistSans.variable, geistMono.variable, 'bg-page font-sans antialiased')}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -96,7 +94,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <SidebarInset className="bg-gray-2">
+            <SidebarInset className="bg-page">
               <SiteHeader />
               <div className="flex flex-1 flex-col gap-4 p-4">
                 <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">

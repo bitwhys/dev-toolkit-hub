@@ -1,10 +1,17 @@
-@import './sand.css';
+@import './slate.css';
 @import './lime.css';
 @import './sky.css';
 @import './red.css';
 @import './amber.css';
 @import './themes.css';
 
+:root {
+  --bg-page: var(--color-gray-2);
+}
+
+.dark {
+  --bg-page: #111;
+}
 @theme inline {
   /* Black Alpha */
   --color-black-a1: var(--black-a1);
